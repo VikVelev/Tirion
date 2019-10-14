@@ -4,7 +4,10 @@ package macro;
 
 import java.util.*;
 import java.net.*;
-
+import java.io.*;
+import star.common.*;
+import star.base.neo.*;
+ 
 import star.common.*;
 import star.coupledflow.*;
 import star.base.neo.*;
@@ -32,21 +35,27 @@ public class MainMacro extends StarMacro {
 	
 	int maximumIterations = 3000;
 
-	Class CFDPipeline;
-
-	public Simulation simulation;
 	/** [JVMH] For future Inter cross-JVM communication hacks */
-	//public String projectPath = "/home/viktorv/Projects/FormulaStudentTeamDelft/CFDPipeline/";
+	// Class CFDPipeline;
+	// pulic String pwd = Paths.get(".").toAbsolutePath()
+	// public String projectPath = "/home/viktorv/Projects/FSTeamDelft/Tirion/";
+	
+	public Simulation simulation;
+
 	private MeshPipelineController meshPipelineController;
 	private SolverStoppingCriterionManager solverCriterionManager;
+
+	private String OS = System.getProperty("os.name").toLowerCase();
 
 	public void execute() {
 
 		/** The whole sequential CFD pipeline */
 		// [JVMH] manageImports();
 		initialize();
+		//runSimulation(maximumIterations);
 		runPostProcessing();
-		runSimulation(maximumIterations);
+		//csvDataExport();
+		//pythonPostProcExport();
 
 		/** 
 		 * You can just comment out any step of the pipeline and the rest will work 
@@ -55,11 +64,10 @@ public class MainMacro extends StarMacro {
 	}
 
 	private void initialize() {
-		/** Get simulation environment, and initialize global variables */
+		/** Get simulation environment, initialize global variables, initalize database structure */
 		
 		simulation = getActiveSimulation();
-		meshPipelineController = simulation.get(MeshPipelineController.class);
-		solverCriterionManager = simulation.getSolverStoppingCriterionManager();
+		initializeDatabase();
 	}
 
 	private void runSimulation(int maxIterations) {
@@ -68,6 +76,9 @@ public class MainMacro extends StarMacro {
 		 * The simulation will stop if the number of iterations has reached 
 		 * the previously specified "maximumIterations" (class global)
 		 * */
+
+		meshPipelineController = simulation.get(MeshPipelineController.class);
+		solverCriterionManager = simulation.getSolverStoppingCriterionManager();
 		
 		meshPipelineController.generateVolumeMesh();
 		StepStoppingCriterion stepStoppingCriterion = (StepStoppingCriterion) solverCriterionManager
@@ -96,6 +107,26 @@ public class MainMacro extends StarMacro {
 
 	}
 
+	public void initializeDatabase() {
+		/** 
+		 * This should act as an interface between the actual processing and 
+		 * saving files (in a Database or just FilesystemDB)
+		 * 
+		 * TODO: Implement this after implementing the post processing 
+		 * TODO: Implement post-post-processing, concating pngs into videos with ffmpeg 
+		 * 
+		 * Initializing consists of creating the folders/db models/
+		 * Connecting to the database.
+		 * 
+		 * TODO: Things to consider: use Ignite || use Postgres + Redis || use MongoDB
+		 * 
+		 * */
+	}
+
+	public void checkpoint(String path) {
+		simulation.saveState(path);
+	}
+
 	public void export() {
 		/** 
 		 * This should act as an interface between the actual processing and 
@@ -109,12 +140,56 @@ public class MainMacro extends StarMacro {
 		log("STUB!");
 	}
 
+	private void csvDataExport() {
+
+		/**
+		 * Full export data (residuals) to .csv
+		 * 
+		 * Previously defined process in the full_export.java #Deprecated#
+		 */
+
+		String pathName, simName, mainFolderName, simPath, figName, saveName;
+
+		simName = simulation.getPresentationName();
+		simPath = simulation.getSessionDir();
+		
+		String separator = ((OS.indexOf("win") >= 0) ? "\\" : "/");
+		mainFolderName = simPath + separator + "PlotsCSV#" + simName;
+		
+		log("Saving output to: " + mainFolderName);
+		new File(mainFolderName).mkdir();
+		
+		int all = simulation.getPlotManager().getObjects().size();
+		int i = 0;
+
+		for (StarPlot plot : simulation.getPlotManager().getObjects()) {
+			
+			figName = plot.getPresentationName();
+			MonitorPlot monitorPlot = ((MonitorPlot) simulation.getPlotManager().getPlot(figName));
+			monitorPlot.export(resolvePath(mainFolderName + separator + figName + ".csv"), ",");	
+			// log(resolvePath(mainFolderName + separator + figName + ".csv"));
+			i++;
+			progress(i, all);
+		}
+	}
+
+	private void pythonPostProcExport() {
+		/**
+		 * Basic data perparation with pandas and numpy
+		 * 
+		 * STUB
+		 */
+		log("[pythonPostProcExport()]: !stub");
+	}
+
+	/** For JVM Hacks */
+
 	private void manageImports() {
 		/** [JVMH] For future Inter cross-JVM communication hacks */
 
 		log(Paths.get(".").toAbsolutePath().normalize().toString());
-		log("file://" + projectPath + "/scripts/CFDPipeline.java");
-		log("STUB!");
+		//log("file://" + projectPath + "/scripts/CFDPipeline.java");
+		log("!stub");
 
 		// [JVMH]
 		// URLClassLoader urlClassLoader = URLClassLoader.newInstance(new URL[] {
@@ -124,9 +199,37 @@ public class MainMacro extends StarMacro {
 		// CFDPipeline = urlClassLoader.loadClass("deep");
 	}
 
-	public void log(Object x) {
+	/** End of JVM Hacks */
+
+	/** Utility Functions */
+
+	private void checkpointLog(String what, String where) {
+		log(String.format("Saved %s at %s.", what, where));
+	}
+
+	private void progress(int done, int all) {
+		StringBuilder progressBar = new StringBuilder();
+
+		for(int i = 0; i < all; i++) {
+			if (i < done) {
+				progressBar.append("#");
+			} else {
+				progressBar.append("-");
+			} 
+		}
+
+		log(
+			String.format(
+				"Progress: [%s] %d/%d -> %.2f%%", 
+				progressBar.toString(), done, all, 
+				(((float) done/ (float) all))*100
+			)
+		);
+	}
+
+	private void log(Object x) {
 		/** A logging utility for debugging and additional information. Needs initialization beforehand */
-		System.out.println("[LOG]: " + x); // This logs in the terminal if you've run STAR-CCM through shell.
+		// System.out.println("[LOG]: " + x); // This logs in the terminal if you've run STAR-CCM through shell.
 		simulation.println("[LOG]: " + x); // This logs in the output window in the program itself.
 	}
 }
