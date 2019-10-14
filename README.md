@@ -1,3 +1,4 @@
 # Tirion
 A Computational Fluid Dynamics (CFD) Macros Framework based on STARCCM.
-Written for Formula Student Team Delft.
+FUTURE WORK: Utilizing Meta-programming written in Rust.
+Written especially for Formula Student Team Delft.
