@@ -13,12 +13,15 @@ public class PostProcessing extends StarMacro {
 	/** Version 19v2_rad */
 
 	Simulation simulation;
+	int clipping;
 
 	public void execute() {
 		run();
 	}
 
 	private void run() {
+
+		clipping = 1;
 
 		String namePath, simName, figName, mainFolderName;
 		String iterCpY, iterCpYName, iterTCpy, iterSCpx, iterVel, iterTCpx, iterVorX;
@@ -163,7 +166,7 @@ public class PostProcessing extends StarMacro {
 		scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, -1.0, 0.0 }),
 				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
 		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -3.0, 1.0 }));
-		scalarDisplayer_2.getScalarDisplayQuantity().setClip(0);
+		scalarDisplayer_2.getScalarDisplayQuantity().setClip(clipping);
 
 		SimpleAnnotation simpleAnnotation_1 = simulation.getAnnotationManager().createSimpleAnnotation();
 		simpleAnnotation_1.setPresentationName("Figure_name");
@@ -229,10 +232,10 @@ public class PostProcessing extends StarMacro {
 			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 		}
 
-		SymmetricRepeat symmetricRepeat_0 = ((SymmetricRepeat) simulation.getTransformManager()
-				.getObject("Symmetry 1"));
+		// SymmetricRepeat symmetricRepeat_0 = ((SymmetricRepeat) simulation.getTransformManager()
+		// 		.getObject("Symmetry 1"));
 
-		scalarDisplayer_2.setVisTransform(symmetricRepeat_0);
+		// scalarDisplayer_2.setVisTransform(symmetricRepeat_0);
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_1);
 		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -0.1, 1.0 }));
 		coordinate_5.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 1.0, 0.0, 0.0 }));
@@ -513,7 +516,7 @@ public class PostProcessing extends StarMacro {
 		// scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, -1.0, 0.0 }),
 		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
 		// scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -3.0, 1.0 }));
-		// scalarDisplayer_2.getScalarDisplayQuantity().setClip(0);
+		// scalarDisplayer_2.getScalarDisplayQuantity().setClip(clipping);
 
 		// coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 0.0, 0.0001, 0.0 }));
 		// scalarScene.setMeshOverrideMode(0);
@@ -571,7 +574,7 @@ public class PostProcessing extends StarMacro {
 		// scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, -1.0, 0.0 }),
 		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
 		// scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { 0.0, 0.05 }));
-		// scalarDisplayer_2.getScalarDisplayQuantity().setClip(0);
+		// scalarDisplayer_2.getScalarDisplayQuantity().setClip(clipping);
 		// coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 0.0, 0.0001, 0.0 }));
 		// scalarScene.setMeshOverrideMode(0);
 
@@ -640,7 +643,7 @@ public class PostProcessing extends StarMacro {
 		// vectorDisplayer_4.setDisplayMode(1);
 		// vectorDisplayer_4.getInputParts().setQuery(null);
 		// vectorDisplayer_4.getInputParts().setObjects(planeSection);
-		// vectorDisplayer_4.getVectorDisplayQuantity().setClip(0);
+		// vectorDisplayer_4.getVectorDisplayQuantity().setClip(clipping);
 
 		// UserFieldFunction userFieldFunction_4 = ((UserFieldFunction) simulation.getFieldFunctionManager()
 		// 		.getFunction("Mean of Velocity"));
