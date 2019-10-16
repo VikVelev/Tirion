@@ -105,15 +105,25 @@ public class PostProcessing extends StarMacro {
 		scalarScene.getDisplayerManager().deleteDisplayers(new NeoObjectVector(new Object[] { partDisplayer_3 }));
 		scalarDisplayer_2.getInputParts().setQuery(null);
 		scalarDisplayer_2.getInputParts().setObjects(planeSection);
+		
 
+		log(simulation.getFieldFunctionManager().getFunction("MeanStatic_CPMonitor"));
 		PrimitiveFieldFunction primitiveFieldFunction_0 = ((PrimitiveFieldFunction) simulation
 				.getFieldFunctionManager().getFunction("MeanStatic_CPMonitor"));
+
+		log(simulation.getFieldFunctionManager().getFunction("MeanTotal_CPMonitor"));
 		PrimitiveFieldFunction primitiveFieldFunction_1 = ((PrimitiveFieldFunction) simulation
 				.getFieldFunctionManager().getFunction("MeanTotal_CPMonitor"));
+
+		log(simulation.getFieldFunctionManager().getFunction("MeanVelocityMonitor"));
 		PrimitiveFieldFunction primitiveFieldFunction_2 = ((PrimitiveFieldFunction) simulation
 				.getFieldFunctionManager().getFunction("MeanVelocityMonitor"));
+
+		log(simulation.getFieldFunctionManager().getFunction("MeanVorticityMonitor"));
 		PrimitiveFieldFunction primitiveFieldFunction_3 = ((PrimitiveFieldFunction) simulation
 				.getFieldFunctionManager().getFunction("MeanVorticityMonitor"));
+
+		log(simulation.getFieldFunctionManager().getFunction("MeanSkinFrictionMonitor"));
 		PrimitiveFieldFunction primitiveFieldFunction_4 = ((PrimitiveFieldFunction) simulation
 				.getFieldFunctionManager().getFunction("MeanSkinFrinctionMonitor"));
 
@@ -746,5 +756,11 @@ public class PostProcessing extends StarMacro {
 
 			vectorScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 		}
+	}
+
+	private void log(Object x) {
+		/** A logging utility for debugging and additional information. Needs initialization beforehand */
+		// System.out.println("[LOG]: " + x); // This logs in the terminal if you've run STAR-CCM through shell.
+		simulation.println("[LOG]: " + x); // This logs in the output window in the program itself.
 	}
 }

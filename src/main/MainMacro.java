@@ -52,10 +52,10 @@ public class MainMacro extends StarMacro {
 		/** The whole sequential CFD pipeline */
 		// [JVMH] manageImports();
 		initialize();
-		//runSimulation(maximumIterations);
+		runSimulation(maximumIterations);
 		runPostProcessing();
-		//csvDataExport();
-		//pythonPostProcExport();
+		csvDataExport();
+		pythonPostProcExport();
 
 		/** 
 		 * You can just comment out any step of the pipeline and the rest will work 
