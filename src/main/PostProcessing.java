@@ -129,12 +129,13 @@ public class PostProcessing extends StarMacro {
 		PrimitiveFieldFunction primitiveFieldFunction_4 = ((PrimitiveFieldFunction) simulation
 				.getFieldFunctionManager().getFunction("MeanSkinFrinctionMonitor"));
 
+		log("Scalar shit");
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
 		planeSection.getInputParts().setQuery(null);
 
 		Region region_0 = simulation.getRegionManager().getRegion("Region 1");
 		
-		System.out.println("Boundary check accross all regions");
+		log("Boundary check accross all regions");
 
 		int regionId = 0, boundaryIndex = 0;
 		Map<Integer, ArrayList<Object>> regionBoundaries = new HashMap<Integer, ArrayList<Object>>();
