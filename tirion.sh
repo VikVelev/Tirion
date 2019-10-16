@@ -4,6 +4,8 @@
 # Default output is in the current folder
 
 macroPath="./src/main/PostProcessing.java"; #Add the absolute path here if you want to run ./tirion.sh from everywhere
+simPath=$1;
+cores=$2;
 
 function cleanup {                                                                                                                                                   
    echo "[!] Tirion framework exiting..."
@@ -14,9 +16,6 @@ function finishedJob {
     echo "[*] Exited gracefully."
     exit 0
 }
-
-simPath=$1;
-cores=$2;
 
 function main {
     echo "[-] Initializing Tirion framework...";
@@ -44,6 +43,29 @@ function main {
     sleep 2
 
     starccm+ -rsh ssh -np $cores -podkey $power_on_demand_license -licpath $license_path -power $simPath -batch $macroPath;
+
+    convert_to_videos
+
 }
 
-main
+function convert_to_videos {
+    
+    currentDir=$(pwd);
+    cd $(dirname $simPath);
+    
+    simName=$(basename $simPath);
+    simName=${simName::-4};
+
+    cd "PostProcessing#${simName}";
+
+    for f in *; do
+        if [ -d "$f" ]; then
+            cd $f;
+            bash ./src/utils/video_output.sh '$f_*';
+            echo $f;
+            cd ..;
+        fi
+    done
+}
+
+convert_to_videos

@@ -183,7 +183,9 @@ public class PostProcessing extends StarMacro {
 			currentView_2.setInput(new DoubleVector(new double[] { 0.6, 0.0001 + 0.05 * iterY, 0.5 }),
 					new DoubleVector(new double[] { 0.6, -50 + 0.05 * iterY, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
-			iterCpY = String.valueOf(iterY);
+
+			
+			iterCpY = (iterY > 10) ? String.valueOf(iterY) :  "0" + String.valueOf(iterY);
 			
 			figName = simName + " " + "y=" + String.format("%.2f", 0.05 * iterY) + "m";
 			simpleAnnotation_1.setText(figName);
@@ -204,7 +206,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -50 + 0.05 * iterY, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterVel = String.valueOf(iterY);
+			iterVel = (iterY > 10) ? String.valueOf(iterY) :  "0" + String.valueOf(iterY);
 			figName = simName + " " + "y=" + String.format("%.2f", 0.05 * iterY) + "m";
 			simpleAnnotation_1.setText(figName);
 
@@ -224,7 +226,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -50 + 0.05 * iterY, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 			
-			iterTCpy = String.valueOf(iterY);
+			iterTCpy = (iterY > 10) ? String.valueOf(iterY) :  "0" + String.valueOf(iterY);
 			figName = simName + " " + "y=" + String.format("%.2f", 0.05 * iterY) + "m";
 			namePath = TCpYFolder + "/TCpY_" + iterTCpy + ".png";
 			simpleAnnotation_1.setText(figName);
@@ -251,7 +253,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { -40 - 0.8 + 0.05 * iterX, 0.0, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = String.valueOf(iterX);
+			iterTCpx = (iterX > 10) ? String.valueOf(iterX) :  "0" + String.valueOf(iterX);
 			figName = simName + " " + "x=" + String.format("%.2f", 0.05 * iterX) + "m";
 			namePath = TCpXFolder + "/TCpX__" + iterTCpx + ".png";
 
@@ -268,7 +270,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { -40 - 0.8 + 0.05 * iterX, 0.0, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = String.valueOf(iterX);
+			iterTCpx = (iterX > 10) ? String.valueOf(iterX) :  "0" + String.valueOf(iterX);
 			figName = simName + " " + "x=" + String.format("%.2f", 0.05 * iterX) + "m";
 			namePath = TCpXFolder + "/TCpX_" + iterTCpx + ".png";
 
@@ -288,7 +290,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { -40 - 0.8 + 0.05 * iterX, 0.0, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterSCpx = String.valueOf(iterX);
+			iterSCpx = (iterX > 10) ? String.valueOf(iterX) :  "0" + String.valueOf(iterX);
 			figName = simName + " " + "x=" + String.format("%.2f", 0.05 * iterX) + "m";
 			namePath = SCpXFolder + "/SCpX__" + iterSCpx + ".png";
 
@@ -305,7 +307,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { -40 - 0.8 + 0.05 * iterX, 0.0, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterSCpx = String.valueOf(iterX);
+			iterSCpx = (iterX > 10) ? String.valueOf(iterX) :  "0" + String.valueOf(iterX);
 			figName = simName + " " + "x=" + String.format("%.2f", 0.05 * iterX) + "m";
 			namePath = SCpXFolder + "/SCpX_" + iterSCpx + ".png";
 			simpleAnnotation_1.setText(figName);
@@ -325,7 +327,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { -40 - 0.8 + 0.05 * iterX, 0.0, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterSCpx = String.valueOf(iterX);
+			iterSCpx = (iterX > 10) ? String.valueOf(iterX) :  "0" + String.valueOf(iterX);
 			figName = simName + " " + "x=" + String.format("%.2f", 0.05 * iterX) + "m";
 			namePath = VelXFolder + "/VelX__" + iterSCpx + ".png";
 			simpleAnnotation_1.setText(figName);
@@ -342,7 +344,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { -40 - 0.8 + 0.05 * iterX, 0.0, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterSCpx = String.valueOf(iterX);
+			iterSCpx = (iterX > 10) ? String.valueOf(iterX) :  "0" + String.valueOf(iterX);
 			figName = simName + " " + "x=" + String.format("%.2f", 0.05 * iterX) + "m";
 			namePath = VelXFolder + "/VelX_" + iterSCpx + ".png";
 			simpleAnnotation_1.setText(figName);
@@ -362,7 +364,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { -40 - 0.8 + 0.05 * iterX, 0.0, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterVorX = String.valueOf(iterX);
+			iterVorX = (iterX > 10) ? String.valueOf(iterX) :  "0" + String.valueOf(iterX);
 			figName = simName + " " + "x=" + String.format("%.2f", 0.05 * iterX) + "m";
 			namePath = VorXFolder + "/VorX__" + iterVorX + ".png";
 
@@ -379,7 +381,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { -40 - 0.8 + 0.05 * iterX, 0.0, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterVorX = String.valueOf(iterX);
+			iterVorX = (iterX > 10) ? String.valueOf(iterX) :  "0" + String.valueOf(iterX);
 			namePath = VorXFolder + "/VorX_" + iterVorX + ".png";
 			figName = simName + " " + "x=" + String.format("%.2f", 0.05 * iterX) + "m";
 			simpleAnnotation_1.setText(figName);
@@ -400,7 +402,8 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = String.valueOf(iterZ);
+			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) :  "0" + String.valueOf(iterZ);
+
 			namePath = TCpZFolder + "/TCpZ_" + iterTCpx + ".png";
 			figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
 			simpleAnnotation_1.setText(figName);
@@ -417,7 +420,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = String.valueOf(iterZ);
+			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) :  "0" + String.valueOf(iterZ);
 			namePath = TCpZFolder + "/TCpZ_" + iterTCpx + ".png";
 			figName = simName + " " + "z=" + String.format("%.3f", 0.05 * (iterZ - 4)) + "m";
 			simpleAnnotation_1.setText(figName);
@@ -437,7 +440,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = String.valueOf(iterZ);
+			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) :  "0" + String.valueOf(iterZ);
 			namePath = SCpZFolder + "/SCpZ_" + iterTCpx + ".png";
 			figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
 			simpleAnnotation_1.setText(figName);
@@ -454,7 +457,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 			
-			iterTCpx = String.valueOf(iterZ);
+			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) :  "0" + String.valueOf(iterZ);
 			namePath = SCpZFolder + "/SCpZ_" + iterTCpx + ".png";
 			figName = simName + " " + "z=" + String.format("%.3f", 0.05 * (iterZ - 4)) + "m";
 			simpleAnnotation_1.setText(figName);
@@ -474,7 +477,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = String.valueOf(iterZ);
+			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) :  "0" + String.valueOf(iterZ);
 			namePath = VelZFolder + "/VelZ_" + iterTCpx + ".png";
 			figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
 			simpleAnnotation_1.setText(figName);
@@ -491,7 +494,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = String.valueOf(iterZ);
+			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) :  "0" + String.valueOf(iterZ);
 			namePath = VelZFolder + "/VelZ_" + iterTCpx + ".png";
 			figName = simName + " " + "z=" + String.format("%.3f", 0.05 * (iterZ - 4)) + "m";
 			simpleAnnotation_1.setText(figName);
@@ -499,6 +502,7 @@ public class PostProcessing extends StarMacro {
 			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 		}
 
+		// Scales toggles
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
 		scalarDisplayer_2.getInputParts().setQuery(null);
 
