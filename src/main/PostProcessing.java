@@ -12,6 +12,8 @@ public class PostProcessing extends StarMacro {
 
 	/** Version 19v2_rad */
 
+	Simulation simulation;
+
 	public void execute() {
 		run();
 	}
@@ -36,7 +38,7 @@ public class PostProcessing extends StarMacro {
 		 * 
 		 */
 
-		Simulation simulation = getActiveSimulation();
+		simulation = getActiveSimulation();
 
 		simName = simulation.getPresentationName();
 		simPath = simulation.getSessionDir();
