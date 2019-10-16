@@ -233,10 +233,11 @@ public class PostProcessing extends StarMacro {
 		}
 
 		// Think of a way to generalse
-		SymmetricRepeat symmetricRepeat_0 = ((SymmetricRepeat) simulation.getTransformManager()
-				.getObject("Symmetry"));
+		if(simulation.getTransformManager().getObject("Symmetry") != null) {
+			SymmetricRepeat symmetricRepeat_0 = ((SymmetricRepeat) simulation.getTransformManager().getObject("Symmetry"));
+			scalarDisplayer_2.setVisTransform(symmetricRepeat_0);
+		}
 
-		scalarDisplayer_2.setVisTransform(symmetricRepeat_0);
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_1);
 		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -0.1, 1.0 }));
 		coordinate_5.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 1.0, 0.0, 0.0 }));
