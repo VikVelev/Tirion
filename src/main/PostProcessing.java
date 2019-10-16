@@ -131,8 +131,6 @@ public class PostProcessing extends StarMacro {
 		log("Scalar shit");
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
 		planeSection.getInputParts().setQuery(null);
-
-		Region region_0 = simulation.getRegionManager().getRegion("Region 1");
 		
 		log("Boundary check accross all regions");
 
