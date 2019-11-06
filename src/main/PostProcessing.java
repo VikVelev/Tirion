@@ -45,7 +45,7 @@ public class PostProcessing extends StarMacro {
 		ranges.add(new DoubleVector(new double[] { 0, 1.1 })); 			// Z
 
 		// TODO: Number of slices is absolute distance [(last point - first point) / sliceStep]
-
+		// Z doesn't display but it outputs
 		/**
 		 * Scale variables
 		 */
