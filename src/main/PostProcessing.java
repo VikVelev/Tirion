@@ -38,6 +38,7 @@ public class PostProcessing extends StarMacro {
 
 		sliceStep = 0.05;
 		// Maybe change this from -0.1
+		ranges = new ArrayList<>();
 		ranges.add(new DoubleVector(new double[] { -0.05, 2.95 })); 	// X
 		ranges.add(new DoubleVector(new double[] { 0, 0.8 })); 			// Y [in the case of non-symmetry, goes from -0.8]
 		ranges.add(new DoubleVector(new double[] { 0, 1.1 })); 			// Z
