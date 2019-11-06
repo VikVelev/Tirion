@@ -38,6 +38,7 @@ public class PostProcessing extends StarMacro {
 
 		sliceStep = 0.05;
 		// Maybe change this from -0.1
+		// Reference
 		ranges = new ArrayList<>();
 		ranges.add(new DoubleVector(new double[] { -0.05, 2.95 })); 	// X
 		ranges.add(new DoubleVector(new double[] { 0, 0.8 })); 			// Y [in the case of non-symmetry, goes from -0.8]
@@ -163,7 +164,7 @@ public class PostProcessing extends StarMacro {
 		//log(simulation.getFieldFunctionManager().getFunction("MeanSkinFrictionMonitor"));
 		//PrimitiveFieldFunction primitiveFieldFunction_4 = ((PrimitiveFieldFunction) simulation.getFieldFunctionManager().getFunction("MeanSkinFrinctionMonitor"));
 
-		log("Scalar shit");
+		// log("Scalar shit");
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
 		planeSection.getInputParts().setQuery(null);
 		
