@@ -21,7 +21,7 @@ public class PostProcessing extends StarMacro {
 
 	private void run() {
 
-		clipping = 1;
+		clipping = 0;
 
 		String namePath, simName, figName, mainFolderName;
 		String iterCpY, iterCpYName, iterTCpy, iterSCpx, iterVel, iterTCpx, iterVorX;
@@ -165,7 +165,7 @@ public class PostProcessing extends StarMacro {
 		CurrentView currentView_2 = scalarScene.getCurrentView();
 		scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, -1.0, 0.0 }),
 				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -3.0, 1.0 }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -5.0, 1.0 }));
 		scalarDisplayer_2.getScalarDisplayQuantity().setClip(clipping);
 
 		SimpleAnnotation simpleAnnotation_1 = simulation.getAnnotationManager().createSimpleAnnotation();
@@ -195,7 +195,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_2);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { 0, 20.0 }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { 0, 30.0 }));
 
 		for (int iterY = 0; iterY < 17; iterY++) {
 
@@ -235,8 +235,8 @@ public class PostProcessing extends StarMacro {
 		}
 
 		// Think of a way to generalse
-		if(simulation.getTransformManager().getObject("Symmetry") != null) {
-			SymmetricRepeat symmetricRepeat_0 = ((SymmetricRepeat) simulation.getTransformManager().getObject("Symmetry"));
+		if(simulation.getTransformManager().getObject("Symmetry 1") != null) {
+			SymmetricRepeat symmetricRepeat_0 = ((SymmetricRepeat) simulation.getTransformManager().getObject("Symmetry 1"));
 			scalarDisplayer_2.setVisTransform(symmetricRepeat_0);
 		}
 
@@ -279,7 +279,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -3, 1 }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -5.0, 1.0 }));
 
 		for (int iterX = -1; iterX < 0; iterX++) {
 
@@ -316,7 +316,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_2);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { 0, 20 }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { 0, 30 }));
 
 		for (int iterX = -1; iterX < 0; iterX++) {
 
@@ -429,7 +429,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -3.0, 1.0 }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -5.0, 1.0 }));
 
 		for (int iterZ = 0; iterZ < 6; iterZ++) {
 
@@ -466,7 +466,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_2);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { 0, 20.0 }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { 0, 30.0 }));
 
 		for (int iterZ = 0; iterZ < 6; iterZ++) {
 
