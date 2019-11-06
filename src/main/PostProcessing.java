@@ -19,6 +19,10 @@ public class PostProcessing extends StarMacro {
 	 */
 	private int clipping;
 	private DoubleVector scaleSCp;
+	private DoubleVector scaleTCp;
+	private DoubleVector scaleVel;
+	private DoubleVector scaleVor;
+
 
 	private double sliceStep;
 	private ArrayList<DoubleVector> ranges;
