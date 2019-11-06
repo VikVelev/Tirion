@@ -44,7 +44,7 @@ function main {
 
     starccm+ -rsh ssh -np $cores -podkey $power_on_demand_license -licpath $license_path -power $simPath -batch $macroPath;
 
-    convert_to_videos
+   #convert_to_videos
 
 }
 
