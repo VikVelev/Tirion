@@ -228,7 +228,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_2);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { scaleVel }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(scaleVel);
 
 		// 0.80 cm
 		for (int iterY = 0; iterY < 17; iterY++) {
@@ -313,7 +313,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { scaleSCp}));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(scaleSCp);
 
 		for (int iterX = -1; iterX < 0; iterX++) {  
 
@@ -463,7 +463,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { scaleSCp }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(scaleSCp);
 
 		for (int iterZ = 0; iterZ < 6; iterZ++) {
 
@@ -500,7 +500,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_2);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { scaleVel }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(scaleVel);
 
 		for (int iterZ = 0; iterZ < 6; iterZ++) {
 
