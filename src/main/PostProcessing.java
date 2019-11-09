@@ -49,9 +49,9 @@ public class PostProcessing extends StarMacro {
 		/**
 		 * Scale variables
 		 */
-		scaleSCp = new DoubleVector(new double[] { -5, 1 });
+		scaleSCp = new DoubleVector(new double[] { -3, 1 });
 		scaleTCp = new DoubleVector(new double[] { -.1, 1 });
-		scaleVel = new DoubleVector(new double[] { 0, 30 });
+		scaleVel = new DoubleVector(new double[] { 0, 50});
 		scaleVor = new DoubleVector(new double[] { 0, 1000 });
 
 		// TODO: Fix vector velocities, SCp
@@ -228,7 +228,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_2);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { 0, 30.0 }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { scaleVel }));
 
 		// 0.80 cm
 		for (int iterY = 0; iterY < 17; iterY++) {
@@ -313,9 +313,9 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -5.0, 1.0 }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { scaleSCp}));
 
-		for (int iterX = -1; iterX < 0; iterX++) {
+		for (int iterX = -1; iterX < 0; iterX++) {  
 
 			coordinate_4.setCoordinate(units_0, units_0, units_0,
 					new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.0 }));
@@ -463,7 +463,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -5.0, 1.0 }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { scaleSCp }));
 
 		for (int iterZ = 0; iterZ < 6; iterZ++) {
 
@@ -500,7 +500,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_2);
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { 0, 30.0 }));
+		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { scaleVel }));
 
 		for (int iterZ = 0; iterZ < 6; iterZ++) {
 
