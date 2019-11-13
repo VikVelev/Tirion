@@ -541,130 +541,130 @@ public class PostProcessing extends StarMacro {
 		// }
 
 		// Scales toggles
-		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
-		scalarDisplayer_2.getInputParts().setQuery(null);
+		// scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
+		// scalarDisplayer_2.getInputParts().setQuery(null);
 
-		// Magic numbers defined by the previous cfd macro guy, corresponding to the stuff he wanted to add
-		scalarDisplayer_2.getInputParts().setObjects(
-			regionBoundaries.get(0)
+		// // Magic numbers defined by the previous cfd macro guy, corresponding to the stuff he wanted to add
+		scalarDisplayer_2.getInputParts().setObjects(planeSection
+		// 	regionBoundaries.get(0)
 		);
 
-		scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, -1.0, 0.0 }),
-				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -3.0, 1.0 }));
-		scalarDisplayer_2.getScalarDisplayQuantity().setClip(clipping);
+		// scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, -1.0, 0.0 }),
+		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
+		// scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { -3.0, 1.0 }));
+		// scalarDisplayer_2.getScalarDisplayQuantity().setClip(clipping);
 
-		coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 0.0, 0.0001, 0.0 }));
-		scalarScene.setMeshOverrideMode(0);
-		currentView_2.setInput(new DoubleVector(new double[] { 0.6, 0.0001, 0.5 }),
-				new DoubleVector(new double[] { 0.6, -50, 1.0 }), new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1,
-				1);
+		// coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 0.0, 0.0001, 0.0 }));
+		// scalarScene.setMeshOverrideMode(0);
+		// currentView_2.setInput(new DoubleVector(new double[] { 0.6, 0.0001, 0.5 }),
+		// 		new DoubleVector(new double[] { 0.6, -50, 1.0 }), new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1,
+		// 		1);
 
-		figName = simName + " " + " " + " Side";
-		simpleAnnotation_1.setText(figName);
-		namePath = SCpFolder + "/SCp_" + "Side" + ".png";
-		scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// figName = simName + " " + " " + " Side";
+		// simpleAnnotation_1.setText(figName);
+		// namePath = SCpFolder + "/SCp_" + "Side" + ".png";
+		// scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 0.0, 0.0, 0.0001 }));
-		scalarScene.setMeshOverrideMode(0);
+		// coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 0.0, 0.0, 0.0001 }));
+		// scalarScene.setMeshOverrideMode(0);
 
-		currentView_2.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 }),
-				new DoubleVector(new double[] { 0.6, -0.1, 10.0 }), new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1,
-				1);
+		// currentView_2.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 }),
+		// 		new DoubleVector(new double[] { 0.6, -0.1, 10.0 }), new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1,
+		// 		1);
 
-		namePath = SCpFolder + "/SCp_" + "Top" + ".png";
-		figName = simName + " " + "Top";
-		simpleAnnotation_1.setText(figName);
+		// namePath = SCpFolder + "/SCp_" + "Top" + ".png";
+		// figName = simName + " " + "Top";
+		// simpleAnnotation_1.setText(figName);
 
-		scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, 0.0, 1.0 }),
-				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
-		namePath = SCpFolder + "/SCp_" + "Bottom" + ".png";
-		figName = simName + " Bottom";
+		// scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, 0.0, 1.0 }),
+		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
+		// namePath = SCpFolder + "/SCp_" + "Bottom" + ".png";
+		// figName = simName + " Bottom";
 
-		simpleAnnotation_1.setText(figName);
-		scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// simpleAnnotation_1.setText(figName);
+		// scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { -0.85, 0.0, 0.0 }));
-		scalarScene.setMeshOverrideMode(0);
-		currentView_2.setInput(new DoubleVector(new double[] { -0.85, 0.0, 0.5 }),
-				new DoubleVector(new double[] { -40 - 0.8, 0.0, 1.0 }),
-				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
+		// coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { -0.85, 0.0, 0.0 }));
+		// scalarScene.setMeshOverrideMode(0);
+		// currentView_2.setInput(new DoubleVector(new double[] { -0.85, 0.0, 0.5 }),
+		// 		new DoubleVector(new double[] { -40 - 0.8, 0.0, 1.0 }),
+		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-		namePath = SCpFolder + "/SCp_" + "Front" + ".png";
-		figName = simName + " Front";
-		simpleAnnotation_1.setText(figName);
+		// namePath = SCpFolder + "/SCp_" + "Front" + ".png";
+		// figName = simName + " Front";
+		// simpleAnnotation_1.setText(figName);
 
-		scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		scalarScene.setViewOrientation(new DoubleVector(new double[] { -1.0, 0.0, 0.0 }),
-				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
-		namePath = SCpFolder + "/SCp_" + "Rear" + ".png";
-		figName = simName + " Rear";
-		simpleAnnotation_1.setText(figName);
+		// scalarScene.setViewOrientation(new DoubleVector(new double[] { -1.0, 0.0, 0.0 }),
+		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
+		// namePath = SCpFolder + "/SCp_" + "Rear" + ".png";
+		// figName = simName + " Rear";
+		// simpleAnnotation_1.setText(figName);
 
-		scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_4);
-		scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, -1.0, 0.0 }),
-				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
-		scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { 0.0, 0.05 }));
-		scalarDisplayer_2.getScalarDisplayQuantity().setClip(clipping);
-		coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 0.0, 0.0001, 0.0 }));
-		scalarScene.setMeshOverrideMode(0);
+		// scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_4);
+		// scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, -1.0, 0.0 }),
+		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
+		// scalarDisplayer_2.getScalarDisplayQuantity().setRange(new DoubleVector(new double[] { 0.0, 0.05 }));
+		// scalarDisplayer_2.getScalarDisplayQuantity().setClip(clipping);
+		// coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 0.0, 0.0001, 0.0 }));
+		// scalarScene.setMeshOverrideMode(0);
 
-		currentView_2.setInput(new DoubleVector(new double[] { 0.6, 0.0001, 0.5 }),
-				new DoubleVector(new double[] { 0.6, -50, 1.0 }), new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1,
-				1);
+		// currentView_2.setInput(new DoubleVector(new double[] { 0.6, 0.0001, 0.5 }),
+		// 		new DoubleVector(new double[] { 0.6, -50, 1.0 }), new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1,
+		// 		1);
 
-		figName = simName + " " + " Side";
-		simpleAnnotation_1.setText(figName);
-		namePath = SkinFolder + "/Skin_" + "Side" + ".png";
+		// figName = simName + " " + " Side";
+		// simpleAnnotation_1.setText(figName);
+		// namePath = SkinFolder + "/Skin_" + "Side" + ".png";
 
-		scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 0.0, 0.0, 0.0001 }));
-		scalarScene.setMeshOverrideMode(0);
-		currentView_2.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 }),
-				new DoubleVector(new double[] { 0.6, -0.1, 10.0 }), new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1,
-				1);
+		// coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 0.0, 0.0, 0.0001 }));
+		// scalarScene.setMeshOverrideMode(0);
+		// currentView_2.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 }),
+		// 		new DoubleVector(new double[] { 0.6, -0.1, 10.0 }), new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1,
+		// 		1);
 
-		namePath = SkinFolder + "/Skin_" + "Top" + ".png";
-		figName = simName + " " + "Top";
-		simpleAnnotation_1.setText(figName);
+		// namePath = SkinFolder + "/Skin_" + "Top" + ".png";
+		// figName = simName + " " + "Top";
+		// simpleAnnotation_1.setText(figName);
 
-		scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, 0.0, 1.0 }),
-				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
+		// scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, 0.0, 1.0 }),
+		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
 
-		namePath = SkinFolder + "/Skin_" + "Bottom" + ".png";
-		figName = simName + " Bottom";
-		simpleAnnotation_1.setText(figName);
+		// namePath = SkinFolder + "/Skin_" + "Bottom" + ".png";
+		// figName = simName + " Bottom";
+		// simpleAnnotation_1.setText(figName);
 
-		scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { -0.85, 0.0, 0.0 }));
-		scalarScene.setMeshOverrideMode(0);
-		currentView_2.setInput(new DoubleVector(new double[] { -0.85, 0.0, 0.5 }),
-				new DoubleVector(new double[] { -40 - 0.8, 0.0, 1.0 }),
-				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
+		// coordinate_4.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { -0.85, 0.0, 0.0 }));
+		// scalarScene.setMeshOverrideMode(0);
+		// currentView_2.setInput(new DoubleVector(new double[] { -0.85, 0.0, 0.5 }),
+		// 		new DoubleVector(new double[] { -40 - 0.8, 0.0, 1.0 }),
+		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-		namePath = SkinFolder + "/Skin_" + "Front" + ".png";
-		figName = simName + " Front";
-		simpleAnnotation_1.setText(figName);
+		// namePath = SkinFolder + "/Skin_" + "Front" + ".png";
+		// figName = simName + " Front";
+		// simpleAnnotation_1.setText(figName);
 
-		scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		scalarScene.setViewOrientation(new DoubleVector(new double[] { 1.0, 0.0, 0.0 }),
-				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
+		// scalarScene.setViewOrientation(new DoubleVector(new double[] { 1.0, 0.0, 0.0 }),
+		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }));
 
-		namePath = SkinFolder + "/Skin_" + "Rear" + ".png";
-		figName = simName + " Rear";
-		simpleAnnotation_1.setText(figName);
+		// namePath = SkinFolder + "/Skin_" + "Rear" + ".png";
+		// figName = simName + " Rear";
+		// simpleAnnotation_1.setText(figName);
 
-		scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
 		simulation.getSceneManager().createVectorScene("Vector Scene", "Outline", "Vector");
 		Scene vectorScene = simulation.getSceneManager().getScene("Vector Scene 1");
