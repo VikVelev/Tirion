@@ -546,15 +546,7 @@ public class PostProcessing extends StarMacro {
 
 		// Magic numbers defined by the previous cfd macro guy, corresponding to the stuff he wanted to add
 		scalarDisplayer_2.getInputParts().setObjects(
-			(Boundary) regionBoundaries.get(0).get(1), 
-			(Boundary) regionBoundaries.get(0).get(2),
-			(Boundary) regionBoundaries.get(0).get(3),
-			(Boundary) regionBoundaries.get(0).get(4),
-			(Boundary) regionBoundaries.get(0).get(7),
-			(Boundary) regionBoundaries.get(0).get(9), 
-			(Boundary) regionBoundaries.get(0).get(10), 
-			(Boundary) regionBoundaries.get(0).get(13), 
-			(Boundary) regionBoundaries.get(0).get(14)
+			regionBoundaries.get(0)
 		);
 
 		scalarScene.setViewOrientation(new DoubleVector(new double[] { 0.0, -1.0, 0.0 }),
