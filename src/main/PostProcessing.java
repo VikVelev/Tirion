@@ -1,7 +1,7 @@
 package macro;
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 import star.common.*;
 import star.base.neo.*;
 import star.vis.*;
@@ -17,7 +17,7 @@ public class PostProcessing extends StarMacro {
 	private DoubleVector scaleVor;
 
 	private double sliceStep;
-	private ArrayList<DoubleVector> ranges;
+	private HashMap<String, DoubleVector> ranges;
 
 	public void execute() {
 		run();
@@ -30,9 +30,9 @@ public class PostProcessing extends StarMacro {
 		// Maybe change this from -0.1
 		// Reference
 		ranges = new HashMap<String, DoubleVector>();
-		ranges.add("x", new DoubleVector(new double[] { -0.05, 2.95 })); 	// X
-		ranges.add("y", new DoubleVector(new double[] { 0, 0.8 })); 		// Y [in the case of non-symmetry, goes from -0.8]
-		ranges.add("z", new DoubleVector(new double[] { 0, 1.1 })); 		// Z
+		ranges.put("x", new DoubleVector(new double[] { -0.05, 2.95 })); 	// X
+		ranges.put("y", new DoubleVector(new double[] { 0, 0.8 })); 		// Y [in the case of non-symmetry, goes from -0.8]
+		ranges.put("z", new DoubleVector(new double[] { 0, 1.1 })); 		// Z
 
 		// TODO: Number of slices is absolute distance [(last point - first point) /
 		// sliceStep]
@@ -202,7 +202,13 @@ public class PostProcessing extends StarMacro {
 
 		double iterateUntilY = ((ranges.get("y").get(1) - ranges.get("y").get(0)) / sliceStep) + 1;
 		// All Y axis Post processing
-		for (int iterY = 0; iterY < iterateUntil; iterY++) {
+		for (int iterY = 0; iterY < iterateUntilY; iterY++) {
+
+			String repeatedHash = new String(new char[iterY ]).replace("\0", "#");
+			String repeatedDelta = new String(new char[((int) iterateUntilY)  - (iterY)]).replace("\0", "-");
+			
+			log("{Y-Axis}: " + repeatedHash + repeatedDelta + String.format("%d/%d", (iterY), (int) iterateUntilY - 1));
+
 			scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanStaticCPMonitorFieldFunction);
 			scalarDisplayer.getScalarDisplayQuantity().setRange(scaleSCp);
 			scalarDisplayer.getScalarDisplayQuantity().setClip(clipping);
@@ -239,6 +245,7 @@ public class PostProcessing extends StarMacro {
 
 			namePath = TCpYFolder + "/TCpY_" + iterString + ".png";
 			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+
 		}
 
 		SymmetricRepeat symmetricRepeat = null;
@@ -270,6 +277,12 @@ public class PostProcessing extends StarMacro {
 		double iterateUntilX = ((ranges.get("x").get(1) - ranges.get("x").get(0)) / sliceStep) + 1;
 
 		for (int iterX = -1; iterX < iterateUntilX; iterX++) {
+
+			String repeatedHash = new String(new char[iterX + 1]).replace("\0", "#");
+			String repeatedDelta = new String(new char[((int) iterateUntilX)  - (iterX + 1)]).replace("\0", "-");
+			
+			log("{X-Axis}: " + repeatedHash + repeatedDelta + String.format("%d/%d Done.", (iterX), (int) iterateUntilX - 1));
+
 			coordinate.setCoordinate(units, units, units,
 				new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.0 }));
 
@@ -320,6 +333,7 @@ public class PostProcessing extends StarMacro {
 			simpleAnnotation.setText(figName);
 
 			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+
 		}
 
 		// TODO Optimize the Z axis loops, Convert them to be with flexible stepsize
@@ -703,7 +717,7 @@ public class PostProcessing extends StarMacro {
 		 * A logging utility for debugging and additional information. Needs
 		 * initialization beforehand
 		 */
-		System.out.println("[LOG]: " + x); // This logs in the terminal if you've run STAR-CCM through shell.
+		// System.out.println("[LOG]: " + x); // This logs in the terminal if you've run STAR-CCM through shell.
 		simulation.println("[LOG]: " + x); // This logs in the output window in the program itself.
 	}
 }
