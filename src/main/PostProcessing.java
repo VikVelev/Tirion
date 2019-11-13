@@ -161,8 +161,8 @@ public class PostProcessing extends StarMacro {
 		PrimitiveFieldFunction primitiveFieldFunction_3 = ((PrimitiveFieldFunction) simulation
 				.getFieldFunctionManager().getFunction("MeanVorticityMonitor"));
 
-		log(simulation.getFieldFunctionManager().getFunction("MeanSkinFrictionMonitor"));
-		PrimitiveFieldFunction primitiveFieldFunction_4 = ((PrimitiveFieldFunction) simulation.getFieldFunctionManager().getFunction("MeanSkinFrinctionMonitor"));
+		// log(simulation.getFieldFunctionManager().getFunction("MeanSkinFrictionMonitor"));
+		// PrimitiveFieldFunction primitiveFieldFunction_4 = ((PrimitiveFieldFunction) simulation.getFieldFunctionManager().getFunction("MeanSkinFrinctionMonitor"));
 
 		// log("Scalar shit");
 		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
