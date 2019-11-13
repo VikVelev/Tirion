@@ -699,7 +699,7 @@ public class PostProcessing extends StarMacro {
 				.getAnnotationPropManager().createPropForAnnotation(simpleAnnotation_2);
 
 		vectorDisplayer_4.getVectorDisplayQuantity().setFieldFunction(userFieldFunction_4);
-		vectorDisplayer_4.getVectorDisplayQuantity().setRange(new DoubleVector(new double[] { 0, 20.0 }));
+		vectorDisplayer_4.getVectorDisplayQuantity().setRange(scaleVel);
 		coordinate_5.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 0.0, 1.0, 0.0 }));
 
 		for (int iterY = 0; iterY < 17; iterY++) {
@@ -759,7 +759,7 @@ public class PostProcessing extends StarMacro {
 
 		vectorDisplayer_4.setVisTransform(symmetricRepeat_0);
 		vectorDisplayer_4.getVectorDisplayQuantity().setFieldFunction(userFieldFunction_4);
-		vectorDisplayer_4.getVectorDisplayQuantity().setRange(new DoubleVector(new double[] { 0, 20.0 }));
+		vectorDisplayer_4.getVectorDisplayQuantity().setRange(scaleVel);
 		coordinate_5.setCoordinate(units_0, units_0, units_0, new DoubleVector(new double[] { 1.0, 0.0, 0.0 }));
 
 		for (int iterX = -1; iterX < 0; iterX++) {
