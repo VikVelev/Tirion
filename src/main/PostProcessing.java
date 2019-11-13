@@ -161,6 +161,7 @@ public class PostProcessing extends StarMacro {
 		PrimitiveFieldFunction primitiveFieldFunction_3 = ((PrimitiveFieldFunction) simulation
 				.getFieldFunctionManager().getFunction("MeanVorticityMonitor"));
 
+		// Skin friction stuff
 		// log(simulation.getFieldFunctionManager().getFunction("MeanSkinFrictionMonitor"));
 		// PrimitiveFieldFunction primitiveFieldFunction_4 = ((PrimitiveFieldFunction) simulation.getFieldFunctionManager().getFunction("MeanSkinFrinctionMonitor"));
 
@@ -270,8 +271,6 @@ public class PostProcessing extends StarMacro {
 
 		// Think of a way to generalise
 		// SymmetricRepeat symmetricRepeat_0 = ((SymmetricRepeat) simulation.getTransformManager().getObject("Symmetry 1"));
-		log(simulation.getTransformManager().getObject("Symmetry 1"));
-		log(simulation.getTransformManager().getObject("Symmetry"));
 		
 		SymmetricRepeat symmetricRepeat_0 = null;
 
