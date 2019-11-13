@@ -271,10 +271,15 @@ public class PostProcessing extends StarMacro {
 		// Think of a way to generalise
 
 			
-		SymmetricRepeat symmetricRepeat_0 = ((SymmetricRepeat) simulation.getTransformManager().getObject("Symmetry 1"));
+		// SymmetricRepeat symmetricRepeat_0 = ((SymmetricRepeat) simulation.getTransformManager().getObject("Symmetry 1"));
 		
-		if(simulation.getTransformManager().getObject("Symmetry 1") != null || simulation.getTransformManager().getObject("Symmetry") != null) {
+		if(simulation.getTransformManager().getObject("Symmetry 1") != null) {
 			SymmetricRepeat symmetricRepeat_0 = ((SymmetricRepeat) simulation.getTransformManager().getObject("Symmetry 1"));
+			scalarDisplayer_2.setVisTransform(symmetricRepeat_0);
+		}
+
+		if(simulation.getTransformManager().getObject("Symmetry") != null) {
+			SymmetricRepeat symmetricRepeat_0 = ((SymmetricRepeat) simulation.getTransformManager().getObject("Symmetry"));
 			scalarDisplayer_2.setVisTransform(symmetricRepeat_0);
 		}
 
