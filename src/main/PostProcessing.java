@@ -49,9 +49,9 @@ public class PostProcessing extends StarMacro {
 		/**
 		 * Scale variables
 		 */
-		scaleSCp = new DoubleVector(new double[] { -3, 1 });
+		scaleSCp = new DoubleVector(new double[] { -5, 1 });
 		scaleTCp = new DoubleVector(new double[] { -.1, 1 });
-		scaleVel = new DoubleVector(new double[] { 0, 50});
+		scaleVel = new DoubleVector(new double[] { 0, 30});
 		scaleVor = new DoubleVector(new double[] { 0, 1000 });
 
 		// TODO: Fix vector velocities, SCp
@@ -165,8 +165,8 @@ public class PostProcessing extends StarMacro {
 		PrimitiveFieldFunction primitiveFieldFunction_4 = ((PrimitiveFieldFunction) simulation.getFieldFunctionManager().getFunction("MeanSkinFrinctionMonitor"));
 
 		// log("Scalar shit");
-		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
-		planeSection.getInputParts().setQuery(null);
+		// scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
+		// planeSection.getInputParts().setQuery(null);
 		
 		log("Boundary check accross all regions");
 
@@ -685,7 +685,7 @@ public class PostProcessing extends StarMacro {
 				.getFunction("Mean of Velocity"));
 
 		vectorDisplayer_4.getVectorDisplayQuantity().setFieldFunction(userFieldFunction_4);
-		vectorDisplayer_4.getVectorDisplayQuantity().setRange(new DoubleVector(new double[] { 0, 20.0 }));
+		vectorDisplayer_4.getVectorDisplayQuantity().setRange(scaleVel);
 		vectorScene.getDisplayerManager().deleteDisplayers(new NeoObjectVector(new Object[] { partDisplayer_4 }));
 
 		CurrentView currentView_3 = vectorScene.getCurrentView();
