@@ -165,8 +165,8 @@ public class PostProcessing extends StarMacro {
 		PrimitiveFieldFunction primitiveFieldFunction_4 = ((PrimitiveFieldFunction) simulation.getFieldFunctionManager().getFunction("MeanSkinFrinctionMonitor"));
 
 		// log("Scalar shit");
-		// scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
-		// planeSection.getInputParts().setQuery(null);
+		scalarDisplayer_2.getScalarDisplayQuantity().setFieldFunction(primitiveFieldFunction_0);
+		planeSection.getInputParts().setQuery(null);
 		
 		log("Boundary check accross all regions");
 
