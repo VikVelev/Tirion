@@ -6,6 +6,9 @@
 macroPath="./src/main/PostProcessing.java"; #Add the absolute path here if you want to run ./tirion.sh from everywhere
 simPath=$1;
 cores=$2;
+starccm="/opt/CD-adapco/STAR-CCM+11.04.012-R8/star/bin/starccm+"
+
+export CDLMD_LICENSE_FILE="1999@flex.cd-adapco.com"
 
 function cleanup {                                                                                                                                                   
    echo "[!] Tirion framework exiting..."
@@ -26,7 +29,7 @@ function main {
     trap finishedJob 0;
 
     license_path="1999@flex.cd-adapco.com";
-    power_on_demand_license="TtRoFR472Ew3lLUCvel7JQ";
+    power_on_demand_license="JFUOnAckN/148GnNZ+f2nQ";
 
     if [ ! -n "$cores" ]; then
         cores=$(( $(grep -c ^processor /proc/cpuinfo) / 2 ));
@@ -42,9 +45,9 @@ function main {
 
     sleep 2
 
-    starccm+ -rsh ssh -np $cores -podkey $power_on_demand_license -licpath $license_path -power $simPath -batch $macroPath;
+    $starccm -rsh ssh -np $cores -podkey $power_on_demand_license -licpath $license_path -power $simPath -batch $macroPath;
 
-   #convert_to_videos
+    #convert_to_videos
 
 }
 
@@ -68,4 +71,5 @@ function convert_to_videos {
     done
 }
 
-convert_to_videos
+# convert_to_videos
+main
