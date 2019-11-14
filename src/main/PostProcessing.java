@@ -200,53 +200,53 @@ public class PostProcessing extends StarMacro {
 		FixedAspectAnnotationProp fixedAspectAnnotationProp_1 = (FixedAspectAnnotationProp) scalarScene
 				.getAnnotationPropManager().createPropForAnnotation(simpleAnnotation);
 
-		// double iterateUntilY = ((ranges.get("y").get(1) - ranges.get("y").get(0)) / sliceStep) + 1;
-		// // All Y axis Post processing
-		// for (int iterY = 0; iterY < iterateUntilY; iterY++) {
+		double iterateUntilY = ((ranges.get("y").get(1) - ranges.get("y").get(0)) / sliceStep) + 1;
+		// All Y axis Post processing
+		for (int iterY = 0; iterY < iterateUntilY; iterY++) {
 
-		// 	String repeatedHash = new String(new char[iterY ]).replace("\0", "#");
-		// 	String repeatedDelta = new String(new char[((int) iterateUntilY)  - (iterY)]).replace("\0", "-");
+			String repeatedHash = new String(new char[iterY ]).replace("\0", "#");
+			String repeatedDelta = new String(new char[((int) iterateUntilY)  - (iterY)]).replace("\0", "-");
 			
-		// 	log("{Y-Axis}: " + repeatedHash + repeatedDelta + String.format("%d/%d", (iterY), (int) iterateUntilY - 1));
+			log("{Y-Axis}: " + repeatedHash + repeatedDelta + String.format("%d/%d", (iterY), (int) iterateUntilY - 1));
 
-		// 	scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanStaticCPMonitorFieldFunction);
-		// 	scalarDisplayer.getScalarDisplayQuantity().setRange(scaleSCp);
-		// 	scalarDisplayer.getScalarDisplayQuantity().setClip(clipping);
-		// 	planeSection.getInputParts().setQuery(null);
+			scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanStaticCPMonitorFieldFunction);
+			scalarDisplayer.getScalarDisplayQuantity().setRange(scaleSCp);
+			scalarDisplayer.getScalarDisplayQuantity().setClip(clipping);
+			planeSection.getInputParts().setQuery(null);
 
-		// 	coordinate.setCoordinate(units, units, units,
-		// 			new DoubleVector(new double[] { 0.0, 0.0001 + sliceStep * iterY, 0.0 }));
+			coordinate.setCoordinate(units, units, units,
+					new DoubleVector(new double[] { 0.0, 0.0001 + sliceStep * iterY, 0.0 }));
 
-		// 	scalarScene.setMeshOverrideMode(0);
-		// 	currentView.setInput(
-		// 		new DoubleVector(new double[] { 0.6, 0.0001 + sliceStep * iterY, 0.5 }),
-		// 		new DoubleVector(new double[] { 0.6, -50 + sliceStep * iterY, 1.0 }),
-		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 
-		// 		1, 1
-		// 	);
+			scalarScene.setMeshOverrideMode(0);
+			currentView.setInput(
+				new DoubleVector(new double[] { 0.6, 0.0001 + sliceStep * iterY, 0.5 }),
+				new DoubleVector(new double[] { 0.6, -50 + sliceStep * iterY, 1.0 }),
+				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 
+				1, 1
+			);
 
-		// 	String iterString = (iterY > 10) ? String.valueOf(iterY) : "0" + String.valueOf(iterY);
-		// 	figName = simName + " " + "y=" + String.format("%.2f", sliceStep * iterY) + "m";
-		// 	simpleAnnotation.setText(figName);
+			String iterString = (iterY > 10) ? String.valueOf(iterY) : "0" + String.valueOf(iterY);
+			figName = simName + " " + "y=" + String.format("%.2f", sliceStep * iterY) + "m";
+			simpleAnnotation.setText(figName);
 
-		// 	namePath = SCpYFolder + "/SCpY_" + iterString + ".png";
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+			namePath = SCpYFolder + "/SCpY_" + iterString + ".png";
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		// 	// ***********************************************************************************
-		// 	scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanVelocityMonitorFieldFunction);
-		// 	scalarDisplayer.getScalarDisplayQuantity().setRange(scaleVel);
+			// ***********************************************************************************
+			scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanVelocityMonitorFieldFunction);
+			scalarDisplayer.getScalarDisplayQuantity().setRange(scaleVel);
 
-		// 	namePath = VelYFolder + "/VelY_" + iterString + ".png";
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+			namePath = VelYFolder + "/VelY_" + iterString + ".png";
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		// 	// ***********************************************************************************
-		// 	scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanTotalCPMonitorFieldFunction);
-		// 	scalarDisplayer.getScalarDisplayQuantity().setRange(scaleTCp);
+			// ***********************************************************************************
+			scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanTotalCPMonitorFieldFunction);
+			scalarDisplayer.getScalarDisplayQuantity().setRange(scaleTCp);
 
-		// 	namePath = TCpYFolder + "/TCpY_" + iterString + ".png";
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+			namePath = TCpYFolder + "/TCpY_" + iterString + ".png";
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		// }
+		}
 
 		SymmetricRepeat symmetricRepeat = null;
 
@@ -273,183 +273,183 @@ public class PostProcessing extends StarMacro {
 		scalarDisplayer.setVisTransform(symmetricRepeat);
 		coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 1.0, 0.0, 0.0 }));
 
-		// // All X-axis Post processing
-		// double iterateUntilX = ((ranges.get("x").get(1) - ranges.get("x").get(0)) / sliceStep) + 1;
+		// All X-axis Post processing
+		double iterateUntilX = ((ranges.get("x").get(1) - ranges.get("x").get(0)) / sliceStep) + 1;
 
-		// for (int iterX = -1; iterX < iterateUntilX; iterX++) {
+		for (int iterX = -1; iterX < iterateUntilX; iterX++) {
 
-		// 	String repeatedHash = new String(new char[iterX + 1]).replace("\0", "#");
-		// 	String repeatedDelta = new String(new char[((int) iterateUntilX)  - (iterX + 1)]).replace("\0", "-");
+			String repeatedHash = new String(new char[iterX + 1]).replace("\0", "#");
+			String repeatedDelta = new String(new char[((int) iterateUntilX)  - (iterX + 1)]).replace("\0", "-");
 			
-		// 	log("{X-Axis}: " + repeatedHash + repeatedDelta + String.format("%d/%d Done.", (iterX), (int) iterateUntilX - 1));
+			log("{X-Axis}: " + repeatedHash + repeatedDelta + String.format("%d/%d Done.", (iterX), (int) iterateUntilX - 1));
 
-		// 	coordinate.setCoordinate(units, units, units,
-		// 		new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.0 }));
+			coordinate.setCoordinate(units, units, units,
+				new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.0 }));
 
-		// 	scalarScene.setMeshOverrideMode(0);
-		// 	currentView.setInput(
-		// 		new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.5 }),
-		// 		new DoubleVector(new double[] { -40 - 0.8 + sliceStep * iterX, 0.0, 1.0 }),
-		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }),
-		// 		1, 1
-		// 	);
+			scalarScene.setMeshOverrideMode(0);
+			currentView.setInput(
+				new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.5 }),
+				new DoubleVector(new double[] { -40 - 0.8 + sliceStep * iterX, 0.0, 1.0 }),
+				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }),
+				1, 1
+			);
 
-		// 	figName = simName + " " + "x=" + String.format("%.2f", sliceStep * iterX) + "m";
+			figName = simName + " " + "x=" + String.format("%.2f", sliceStep * iterX) + "m";
 
-		// 	scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanTotalCPMonitorFieldFunction);
-		// 	scalarDisplayer.getScalarDisplayQuantity().setRange(scaleTCp);
+			scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanTotalCPMonitorFieldFunction);
+			scalarDisplayer.getScalarDisplayQuantity().setRange(scaleTCp);
 
-		// 	String iterString = (iterX > 10) ? String.valueOf(iterX) : "0" + String.valueOf(iterX);
-		// 	namePath = TCpXFolder + "/TCpX_" + iterString + ".png";
+			String iterString = (iterX > 10) ? String.valueOf(iterX) : "0" + String.valueOf(iterX);
+			namePath = TCpXFolder + "/TCpX_" + iterString + ".png";
 
-		// 	simpleAnnotation.setText(figName);
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-		// 	// ************************************************************************************
-		// 	// */
-		// 	scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanStaticCPMonitorFieldFunction);
-		// 	scalarDisplayer.getScalarDisplayQuantity().setRange(scaleSCp);
+			simpleAnnotation.setText(figName);
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+			// ************************************************************************************
+			// */
+			scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanStaticCPMonitorFieldFunction);
+			scalarDisplayer.getScalarDisplayQuantity().setRange(scaleSCp);
 
-		// 	namePath = SCpXFolder + "/SCpX_" + iterString + ".png";
-		// 	simpleAnnotation.setText(figName);
+			namePath = SCpXFolder + "/SCpX_" + iterString + ".png";
+			simpleAnnotation.setText(figName);
 
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		// 	// ************************************************************************************
-		// 	// */
-		// 	scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanVelocityMonitorFieldFunction);
-		// 	scalarDisplayer.getScalarDisplayQuantity().setRange(scaleVel);
+			// ************************************************************************************
+			// */
+			scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanVelocityMonitorFieldFunction);
+			scalarDisplayer.getScalarDisplayQuantity().setRange(scaleVel);
 
-		// 	namePath = VelXFolder + "/VelX_" + iterString + ".png";
-		// 	simpleAnnotation.setText(figName);
+			namePath = VelXFolder + "/VelX_" + iterString + ".png";
+			simpleAnnotation.setText(figName);
 
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		// 	// ************************************************************************************
-		// 	// */
-		// 	scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanVorticityMonitorFieldFunction);
-		// 	scalarDisplayer.getScalarDisplayQuantity().setRange(scaleVor);
+			// ************************************************************************************
+			// */
+			scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanVorticityMonitorFieldFunction);
+			scalarDisplayer.getScalarDisplayQuantity().setRange(scaleVor);
 
-		// 	namePath = VorXFolder + "/VorX_" + iterString + ".png";
-		// 	simpleAnnotation.setText(figName);
+			namePath = VorXFolder + "/VorX_" + iterString + ".png";
+			simpleAnnotation.setText(figName);
 
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		// }
+		}
 
-		// // TODO Optimize the Z axis loops, Convert them to be with flexible stepsize
+		// TODO Optimize the Z axis loops, Convert them to be with flexible stepsize
 
-		// scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanTotalCPMonitorFieldFunction);
-		// scalarDisplayer.getScalarDisplayQuantity().setRange(scaleTCp);
-		// coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0.0, 0.0, 0.1 }));
+		scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanTotalCPMonitorFieldFunction);
+		scalarDisplayer.getScalarDisplayQuantity().setRange(scaleTCp);
+		coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0.0, 0.0, 0.1 }));
 
-		// for (int iterZ = 0; iterZ < 6; iterZ++) {
+		for (int iterZ = 0; iterZ < 6; iterZ++) {
 
-		// 	coordinate.setCoordinate(units, units, units,
-		// 			new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + 0.01 * iterZ }));
-		// 	scalarScene.setMeshOverrideMode(0);
-		// 	currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + 0.01 * iterZ }),
-		// 			new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
-		// 			new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
+			coordinate.setCoordinate(units, units, units,
+					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + 0.01 * iterZ }));
+			scalarScene.setMeshOverrideMode(0);
+			currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + 0.01 * iterZ }),
+					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
+					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-		// 	iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
 
-		// 	namePath = TCpZFolder + "/TCpZ_" + iterTCpx + ".png";
-		// 	figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
-		// 	simpleAnnotation.setText(figName);
+			namePath = TCpZFolder + "/TCpZ_" + iterTCpx + ".png";
+			figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
+			simpleAnnotation.setText(figName);
 
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-		// }
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		}
 
-		// for (int iterZ = 6; iterZ < 27; iterZ++) {
+		for (int iterZ = 6; iterZ < 27; iterZ++) {
 
-		// 	coordinate.setCoordinate(units, units, units,
-		// 			new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + sliceStep * (iterZ - 4) }));
-		// 	scalarScene.setMeshOverrideMode(0);
-		// 	currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + sliceStep * (iterZ - 4) }),
-		// 			new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
-		// 			new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
+			coordinate.setCoordinate(units, units, units,
+					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + sliceStep * (iterZ - 4) }));
+			scalarScene.setMeshOverrideMode(0);
+			currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + sliceStep * (iterZ - 4) }),
+					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
+					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-		// 	iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
-		// 	namePath = TCpZFolder + "/TCpZ_" + iterTCpx + ".png";
-		// 	figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
-		// 	simpleAnnotation.setText(figName);
+			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			namePath = TCpZFolder + "/TCpZ_" + iterTCpx + ".png";
+			figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
+			simpleAnnotation.setText(figName);
 
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-		// }
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		}
 
-		// scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanStaticCPMonitorFieldFunction);
-		// scalarDisplayer.getScalarDisplayQuantity().setRange(scaleSCp);
+		scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanStaticCPMonitorFieldFunction);
+		scalarDisplayer.getScalarDisplayQuantity().setRange(scaleSCp);
 
-		// for (int iterZ = 0; iterZ < 6; iterZ++) {
+		for (int iterZ = 0; iterZ < 6; iterZ++) {
 
-		// 	coordinate.setCoordinate(units, units, units,
-		// 			new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + 0.01 * iterZ }));
-		// 	scalarScene.setMeshOverrideMode(0);
-		// 	currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + 0.01 * iterZ }),
-		// 			new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
-		// 			new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
+			coordinate.setCoordinate(units, units, units,
+					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + 0.01 * iterZ }));
+			scalarScene.setMeshOverrideMode(0);
+			currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + 0.01 * iterZ }),
+					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
+					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-		// 	iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
-		// 	namePath = SCpZFolder + "/SCpZ_" + iterTCpx + ".png";
-		// 	figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
-		// 	simpleAnnotation.setText(figName);
+			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			namePath = SCpZFolder + "/SCpZ_" + iterTCpx + ".png";
+			figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
+			simpleAnnotation.setText(figName);
 
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-		// }
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		}
 
-		// for (int iterZ = 6; iterZ < 27; iterZ++) {
+		for (int iterZ = 6; iterZ < 27; iterZ++) {
 
-		// 	coordinate.setCoordinate(units, units, units,
-		// 			new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + sliceStep * (iterZ - 4) }));
-		// 	scalarScene.setMeshOverrideMode(0);
-		// 	currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + sliceStep * (iterZ - 4) }),
-		// 			new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
-		// 			new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
+			coordinate.setCoordinate(units, units, units,
+					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + sliceStep * (iterZ - 4) }));
+			scalarScene.setMeshOverrideMode(0);
+			currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + sliceStep * (iterZ - 4) }),
+					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
+					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-		// 	iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
-		// 	namePath = SCpZFolder + "/SCpZ_" + iterTCpx + ".png";
-		// 	figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
-		// 	simpleAnnotation.setText(figName);
+			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			namePath = SCpZFolder + "/SCpZ_" + iterTCpx + ".png";
+			figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
+			simpleAnnotation.setText(figName);
 
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-		// }
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		}
 
-		// scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanVelocityMonitorFieldFunction);
-		// scalarDisplayer.getScalarDisplayQuantity().setRange(scaleVel);
+		scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanVelocityMonitorFieldFunction);
+		scalarDisplayer.getScalarDisplayQuantity().setRange(scaleVel);
 
-		// for (int iterZ = 0; iterZ < 6; iterZ++) {
+		for (int iterZ = 0; iterZ < 6; iterZ++) {
 
-		// 	coordinate.setCoordinate(units, units, units,
-		// 			new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + 0.01 * iterZ }));
-		// 	scalarScene.setMeshOverrideMode(0);
-		// 	currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + 0.01 * iterZ }),
-		// 			new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
-		// 			new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
+			coordinate.setCoordinate(units, units, units,
+					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + 0.01 * iterZ }));
+			scalarScene.setMeshOverrideMode(0);
+			currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + 0.01 * iterZ }),
+					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
+					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-		// 	iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
-		// 	namePath = VelZFolder + "/VelZ_" + iterTCpx + ".png";
-		// 	figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
-		// 	simpleAnnotation.setText(figName);
+			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			namePath = VelZFolder + "/VelZ_" + iterTCpx + ".png";
+			figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
+			simpleAnnotation.setText(figName);
 
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-		// }
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		}
 
-		// for (int iterZ = 6; iterZ < 27; iterZ++) {
+		for (int iterZ = 6; iterZ < 27; iterZ++) {
 
-		// 	coordinate.setCoordinate(units, units, units,
-		// 			new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + sliceStep * (iterZ - 4) }));
-		// 	scalarScene.setMeshOverrideMode(0);
-		// 	currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + sliceStep * (iterZ - 4) }),
-		// 			new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
-		// 			new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
+			coordinate.setCoordinate(units, units, units,
+					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + sliceStep * (iterZ - 4) }));
+			scalarScene.setMeshOverrideMode(0);
+			currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + sliceStep * (iterZ - 4) }),
+					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
+					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-		// 	iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
-		// 	namePath = VelZFolder + "/VelZ_" + iterTCpx + ".png";
-		// 	figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
-		// 	simpleAnnotation.setText(figName);
+			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			namePath = VelZFolder + "/VelZ_" + iterTCpx + ".png";
+			figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
+			simpleAnnotation.setText(figName);
 
-		// 	scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-		// }
+			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		}
 
 		// TODO Fix Skin friction coefficient
 		// Scales toggles
