@@ -6,7 +6,8 @@
 macroPath="./src/main/PostProcessing.java"; #Add the absolute path here if you want to run ./tirion.sh from everywhere
 simPath=$1;
 cores=$2;
-starccm="/opt/CD-adapco/STAR-CCM+11.04.012-R8/star/bin/starccm+"
+starccm="starccm+"
+# starccm="/opt/CD-adapco/STAR-CCM+11.04.012-R8/star/bin/starccm+"
 
 export CDLMD_LICENSE_FILE="1999@flex.cd-adapco.com"
 
@@ -43,16 +44,24 @@ function main {
     echo "    -- MainMacro Script: $macroPath"
     echo "[%] Running STAR-CCM+ with $cores cores configured..."
 
-    sleep 2
+    sleep 1
 
-    $starccm -rsh ssh -np $cores -podkey $power_on_demand_license -licpath $license_path -power $simPath -batch $macroPath;
+    #  -jvmargs '-Xdebug -server -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8765'\
+    $starccm\
+             -jvmargs '-server'\
+             -rsh ssh\
+             -np $cores\
+             -podkey $power_on_demand_license\
+             -licpath $license_path\
+             -power $simPath\
+             -hardwarebatch\
+             -batch $macroPath
 
     #convert_to_videos
-
 }
 
+# WIP
 function convert_to_videos {
-    
     currentDir=$(pwd);
     cd $(dirname $simPath);
     

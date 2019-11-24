@@ -20,10 +20,14 @@ public class PostProcessing extends StarMacro {
 	private HashMap<String, DoubleVector> ranges;
 
 	public void execute() {
-		run();
+		try {
+			run();
+		} catch(Exception e) {
+			log(e);
+		}
 	}
 
-	private void run() {
+	private void run() throws Exception {
 
 		clipping = 0;
 		sliceStep = 0.05;
@@ -69,7 +73,7 @@ public class PostProcessing extends StarMacro {
 
 		simName = simulation.getPresentationName();
 		simPath = simulation.getSessionDir();
-
+			
 		mainFolderName = simPath + "/PostProcessing#" + simName;
 		TCpZFolder = mainFolderName + "/TCpZ";
 		TCpYFolder = mainFolderName + "/TCpY";
@@ -126,16 +130,17 @@ public class PostProcessing extends StarMacro {
 		scalarDisplayer.initialize();
 		scalarScene.open(true);
 
-		SceneUpdate sceneUpdate_2 = scalarScene.getSceneUpdate();
-		HardcopyProperties hardcopyProperties_2 = sceneUpdate_2.getHardcopyProperties();
-		hardcopyProperties_2.setCurrentResolutionWidth(1271);
-		hardcopyProperties_2.setCurrentResolutionHeight(587);
+		SceneUpdate sceneUpdate = scalarScene.getSceneUpdate();
+		HardcopyProperties hardcopyProperties = sceneUpdate.getHardcopyProperties();
+		hardcopyProperties.setCurrentResolutionWidth(1271);
+		hardcopyProperties.setCurrentResolutionHeight(587);
 
 		scalarScene.resetCamera();
 		scalarScene.getDisplayerManager().deleteDisplayers(new NeoObjectVector(new Object[] { partDisplayer }));
-		scalarDisplayer.getInputParts().setQuery(null);
+		// scalarDisplayer.getInputParts().setQuery(null); // Keep in mind
 		scalarDisplayer.getInputParts().setObjects(planeSection);
 
+		log("Searching for Primitive Field Functions");
 		log(simulation.getFieldFunctionManager().getFunction("MeanStatic_CPMonitor"));
 		PrimitiveFieldFunction meanStaticCPMonitorFieldFunction = ((PrimitiveFieldFunction) simulation
 				.getFieldFunctionManager().getFunction("MeanStatic_CPMonitor"));
@@ -151,13 +156,13 @@ public class PostProcessing extends StarMacro {
 		log(simulation.getFieldFunctionManager().getFunction("MeanVorticityMonitor"));
 		PrimitiveFieldFunction meanVorticityMonitorFieldFunction = ((PrimitiveFieldFunction) simulation
 				.getFieldFunctionManager().getFunction("MeanVorticityMonitor"));
-
+		
 		// Skin friction stuff
 		// log(simulation.getFieldFunctionManager().getFunction("MeanSkinFrictionMonitor"));
 		// PrimitiveFieldFunction primitiveFieldFunction_4 = ((PrimitiveFieldFunction)
 		// simulation.getFieldFunctionManager().getFunction("MeanSkinFrinctionMonitor"));
 
-		log("Boundary check accross all regions.");
+		log("Performing a boundary check accross all regions.");
 
 		int regionId = 0, boundaryIndex = 0;
 		Map<Integer, ArrayList<Object>> regionBoundaries = new HashMap<Integer, ArrayList<Object>>();
@@ -171,7 +176,7 @@ public class PostProcessing extends StarMacro {
 			regionBoundaries.put(regionId, new ArrayList<Object>());
 
 			for (Boundary el : region.getBoundaryManager().getObjects()) {
-				System.out.println(el.toString() + " ID: " + boundaryIndex);
+				log(el.toString() + " ID: " + boundaryIndex);
 				regionBoundaries.get(regionId).add(el);
 				allBoundaries.add(el);
 				objects.add(el);
@@ -182,7 +187,8 @@ public class PostProcessing extends StarMacro {
 			objects.add(region);
 			regionId++;
 		}
-
+		
+		log("Boundary check done.");
 		planeSection.getInputParts().setObjects(objects);
 
 		CurrentView currentView = scalarScene.getCurrentView();
@@ -191,6 +197,33 @@ public class PostProcessing extends StarMacro {
 			new DoubleVector(new double[] { 0.0, -1.0, 0.0 }),
 			new DoubleVector(new double[] { 0.0, 0.0, 1.0 })
 		);
+
+		SymmetricRepeat symmetricRepeat = null;
+
+		try {
+			if (simulation.getTransformManager().getObject("Symmetry 1") != null) {
+				symmetricRepeat = ((SymmetricRepeat) simulation.getTransformManager().getObject("Symmetry 1"));
+				log("'Symmetry 1' Object found.");
+			}
+		} catch (Exception e) {
+			log("{WARNING}");
+			log(e);
+			log("Continuing...");
+		}
+
+		if (symmetricRepeat == null) {	
+			try {
+				if (simulation.getTransformManager().getObject("Symmetry") != null && symmetricRepeat == null) {
+					symmetricRepeat = ((SymmetricRepeat) simulation.getTransformManager().getObject("Symmetry"));
+					log("'Symmetry' Object found.");
+				}
+			} catch (Exception e) {
+				log("{WARNING}");
+				log(e);
+				log("No Symmetry Transform Object. This script will probably not continue working. [stub! TODO]");
+				throw new Exception("TODO: [Implement better symmetry handling.]");
+			}
+		}
 
 		SimpleAnnotation simpleAnnotation = simulation.getAnnotationManager().createSimpleAnnotation();
 
@@ -203,11 +236,8 @@ public class PostProcessing extends StarMacro {
 		double iterateUntilY = ((ranges.get("y").get(1) - ranges.get("y").get(0)) / sliceStep) + 1;
 		// All Y axis Post processing
 		for (int iterY = 0; iterY < iterateUntilY; iterY++) {
-
-			String repeatedHash = new String(new char[iterY ]).replace("\0", "#");
-			String repeatedDelta = new String(new char[((int) iterateUntilY)  - (iterY)]).replace("\0", "-");
 			
-			log("{Y-Axis}: " + repeatedHash + repeatedDelta + String.format("%d/%d", (iterY), (int) iterateUntilY - 1));
+			progress("Y-Axis", iterY, (int) iterateUntilY);
 
 			scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanStaticCPMonitorFieldFunction);
 			scalarDisplayer.getScalarDisplayQuantity().setRange(scaleSCp);
@@ -225,7 +255,7 @@ public class PostProcessing extends StarMacro {
 				1, 1
 			);
 
-			String iterString = (iterY > 10) ? String.valueOf(iterY) : "0" + String.valueOf(iterY);
+			String iterString = (iterY >= 10) ? String.valueOf(iterY) : "0" + String.valueOf(iterY);
 			figName = simName + " " + "y=" + String.format("%.2f", sliceStep * iterY) + "m";
 			simpleAnnotation.setText(figName);
 
@@ -245,29 +275,6 @@ public class PostProcessing extends StarMacro {
 
 			namePath = TCpYFolder + "/TCpY_" + iterString + ".png";
 			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-
-		}
-
-		SymmetricRepeat symmetricRepeat = null;
-
-		try {
-			if (simulation.getTransformManager().getObject("Symmetry 1") != null) {
-				symmetricRepeat = ((SymmetricRepeat) simulation.getTransformManager().getObject("Symmetry 1"));
-			}
-		} catch (Exception e) {
-			log(e);
-		}
-
-		try {
-			if (simulation.getTransformManager().getObject("Symmetry") != null && symmetricRepeat == null) {
-				symmetricRepeat = ((SymmetricRepeat) simulation.getTransformManager().getObject("Symmetry"));
-			}
-		} catch (Exception e) {
-			log(e);
-		}
-
-		if (symmetricRepeat == null) {
-			log("No Symmety Transform Object.");
 		}
 
 		scalarDisplayer.setVisTransform(symmetricRepeat);
@@ -277,11 +284,7 @@ public class PostProcessing extends StarMacro {
 		double iterateUntilX = ((ranges.get("x").get(1) - ranges.get("x").get(0)) / sliceStep) + 1;
 
 		for (int iterX = -1; iterX < iterateUntilX; iterX++) {
-
-			String repeatedHash = new String(new char[iterX + 1]).replace("\0", "#");
-			String repeatedDelta = new String(new char[((int) iterateUntilX)  - (iterX + 1)]).replace("\0", "-");
-			
-			log("{X-Axis}: " + repeatedHash + repeatedDelta + String.format("%d/%d Done.", (iterX), (int) iterateUntilX - 1));
+			progress("X-Axis", iterX, (int) iterateUntilX);
 
 			coordinate.setCoordinate(units, units, units,
 				new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.0 }));
@@ -299,7 +302,7 @@ public class PostProcessing extends StarMacro {
 			scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanTotalCPMonitorFieldFunction);
 			scalarDisplayer.getScalarDisplayQuantity().setRange(scaleTCp);
 
-			String iterString = (iterX > 10) ? String.valueOf(iterX) : "0" + String.valueOf(iterX);
+			String iterString = (iterX >= 10) ? String.valueOf(iterX) : "0" + String.valueOf(iterX);
 			namePath = TCpXFolder + "/TCpX_" + iterString + ".png";
 
 			simpleAnnotation.setText(figName);
@@ -333,25 +336,30 @@ public class PostProcessing extends StarMacro {
 			simpleAnnotation.setText(figName);
 
 			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-
 		}
 
 		// TODO Optimize the Z axis loops, Convert them to be with flexible stepsize
 
 		scalarDisplayer.getScalarDisplayQuantity().setFieldFunction(meanTotalCPMonitorFieldFunction);
+		
 		scalarDisplayer.getScalarDisplayQuantity().setRange(scaleTCp);
-		coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0.0, 0.0, 0.1 }));
-
+		scalarDisplayer.setVisTransform(symmetricRepeat);
+		coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0, 0, 1 }));
+		
+		log("{Z-Axis} Calculating.");
+		
 		for (int iterZ = 0; iterZ < 6; iterZ++) {
+			progress("Z-Axis", iterZ, 27);
 
 			coordinate.setCoordinate(units, units, units,
 					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + 0.01 * iterZ }));
 			scalarScene.setMeshOverrideMode(0);
-			currentView.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + 0.01 * iterZ }),
+			currentView.setInput(new DoubleVector(
+					new double[] { 0.6, -0.1, 0.0001 + 0.01 * iterZ }),
 					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			iterTCpx = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
 
 			namePath = TCpZFolder + "/TCpZ_" + iterTCpx + ".png";
 			figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
@@ -361,6 +369,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		for (int iterZ = 6; iterZ < 27; iterZ++) {
+			progress("Z-Axis", iterZ, 27);
 
 			coordinate.setCoordinate(units, units, units,
 					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + sliceStep * (iterZ - 4) }));
@@ -369,7 +378,7 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			iterTCpx = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
 			namePath = TCpZFolder + "/TCpZ_" + iterTCpx + ".png";
 			figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
 			simpleAnnotation.setText(figName);
@@ -381,6 +390,7 @@ public class PostProcessing extends StarMacro {
 		scalarDisplayer.getScalarDisplayQuantity().setRange(scaleSCp);
 
 		for (int iterZ = 0; iterZ < 6; iterZ++) {
+			progress("Z-Axis", iterZ, 27);
 
 			coordinate.setCoordinate(units, units, units,
 					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + 0.01 * iterZ }));
@@ -389,8 +399,8 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
-			namePath = SCpZFolder + "/SCpZ_" + iterTCpx + ".png";
+			iterSCpx = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			namePath = SCpZFolder + "/SCpZ_" + iterSCpx + ".png";
 			figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
 			simpleAnnotation.setText(figName);
 
@@ -398,6 +408,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		for (int iterZ = 6; iterZ < 27; iterZ++) {
+			progress("Z-Axis", iterZ, 27);
 
 			coordinate.setCoordinate(units, units, units,
 					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + sliceStep * (iterZ - 4) }));
@@ -406,8 +417,8 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
-			namePath = SCpZFolder + "/SCpZ_" + iterTCpx + ".png";
+			iterSCpx = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			namePath = SCpZFolder + "/SCpZ_" + iterSCpx + ".png";
 			figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
 			simpleAnnotation.setText(figName);
 
@@ -418,6 +429,7 @@ public class PostProcessing extends StarMacro {
 		scalarDisplayer.getScalarDisplayQuantity().setRange(scaleVel);
 
 		for (int iterZ = 0; iterZ < 6; iterZ++) {
+			progress("Z-Axis", iterZ, 27);
 
 			coordinate.setCoordinate(units, units, units,
 					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + 0.01 * iterZ }));
@@ -426,8 +438,8 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
-			namePath = VelZFolder + "/VelZ_" + iterTCpx + ".png";
+			iterVel = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			namePath = VelZFolder + "/VelZ_" + iterVel + ".png";
 			figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
 			simpleAnnotation.setText(figName);
 
@@ -435,6 +447,7 @@ public class PostProcessing extends StarMacro {
 		}
 
 		for (int iterZ = 6; iterZ < 27; iterZ++) {
+			progress("Z-Axis", iterZ, 27);
 
 			coordinate.setCoordinate(units, units, units,
 					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + sliceStep * (iterZ - 4) }));
@@ -443,13 +456,14 @@ public class PostProcessing extends StarMacro {
 					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterTCpx = (iterZ > 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			iterTCpx = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
 			namePath = VelZFolder + "/VelZ_" + iterTCpx + ".png";
 			figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
 			simpleAnnotation.setText(figName);
 
 			scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 		}
+
 
 		// TODO Fix Skin friction coefficient
 		// Scales toggles
@@ -594,6 +608,8 @@ public class PostProcessing extends StarMacro {
 
 		// scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
+		log("Calculating Vector Velocities.");
+
 		simulation.getSceneManager().createVectorScene("Vector Scene", "Outline", "Vector");
 		Scene vectorScene = simulation.getSceneManager().getScene("Vector Scene 1");
 		vectorScene.initializeAndWait();
@@ -618,7 +634,7 @@ public class PostProcessing extends StarMacro {
 		vectorDisplayer.getVectorDisplayQuantity().setRange(scaleVel);
 		vectorScene.getDisplayerManager().deleteDisplayers(new NeoObjectVector(new Object[] { vectorPartDisplayer }));
 
-		CurrentView currentView_1 = vectorScene.getCurrentView();
+		CurrentView currentVectorView = vectorScene.getCurrentView();
 		coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0, 0, 1 }));
 
 		SimpleAnnotation otherAnnotation = simulation.getAnnotationManager().createSimpleAnnotation();
@@ -633,43 +649,43 @@ public class PostProcessing extends StarMacro {
 		coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0.0, 1.0, 0.0 }));
 
 		for (int iterY = 0; iterY < 17; iterY++) {
-
-			String repeatedHash = new String(new char[iterY + 1]).replace("\0", "#");
-			String repeatedDelta = new String(new char[((int) 17)  - (iterY + 1)]).replace("\0", "-");
+			progress("Y-Axis", (iterY), 17);
 			
-			log("{Y-Axis}: " + repeatedHash + repeatedDelta + String.format("%d/%d Done.", (iterY), (int) 17 - 1));
-
 			coordinate.setCoordinate(units, units, units,
 					new DoubleVector(new double[] { 0.0, 0.0001 + sliceStep * iterY, 0.0 }));
 			vectorScene.setMeshOverrideMode(0);
-			currentView_1.setInput(new DoubleVector(new double[] { 0.6, 0.0001 + sliceStep * iterY, 0.5 }),
+			currentVectorView.setInput(new DoubleVector(new double[] { 0.6, 0.0001 + sliceStep * iterY, 0.5 }),
 					new DoubleVector(new double[] { 0.6, -50 + sliceStep * iterY, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterVel = String.valueOf(iterY);
+			iterVel = (iterY >= 10) ? String.valueOf(iterY) : "0" + String.valueOf(iterY);
 			figName = simName + " " + "y=" + String.format("%.2f", sliceStep * iterY) + "m";
 			otherAnnotation.setText(figName);
-			namePath = VectVelYFolder + "/VectVelY_" + iterVel + ".jpg";
-
+			namePath = VectVelYFolder + "/VectVelY_" + iterVel + ".png";
+			
+			// log(resolvePath(namePath));
 			vectorScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 		}
 
 		vectorDisplayer.setVisTransform(symmetricRepeat);
 		coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0, 0, 1 }));
 
-		log("{Z-Axis} Calculating.");
 		for (int iterZ = 0; iterZ < 6; iterZ++) {
+			progress("Z-Axis", iterZ, 27);
 
 			coordinate.setCoordinate(units, units, units,
 					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + 0.01 * iterZ }));
 			vectorScene.setMeshOverrideMode(0);
 
-			currentView_1.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + 0.01 * iterZ }),
-					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
-					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
-			iterTCpx = String.valueOf(iterZ);
+			currentVectorView.setInput(new DoubleVector(
+				new double[] { 0.6, -0.1, 0.0001 + 0.01 * iterZ }),
+				new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
+				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 
+				1, 1
+			);
+			iterVel = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
 
-			namePath = VectVelZFolder + "/VectVelZ_" + iterTCpx + ".jpg";
+			namePath = VectVelZFolder + "/VectVelZ_" + iterVel + ".jpg";
 			figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
 
 			otherAnnotation.setText(figName);
@@ -677,33 +693,43 @@ public class PostProcessing extends StarMacro {
 		}
 
 		for (int iterZ = 6; iterZ < 27; iterZ++) {
-
-			coordinate.setCoordinate(units, units, units,
-					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + sliceStep * (iterZ - 4) }));
+			progress("Z-Axis", iterZ, 27);
+			
+			int something = iterZ - 4;
+			coordinate.setCoordinate(units, units, units, 
+					new DoubleVector(new double[] { 
+						0.0, 0.0, 
+						0.0001 + sliceStep * something }));
 			vectorScene.setMeshOverrideMode(0);
-			currentView_1.setInput(new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + sliceStep * (iterZ - 4) }),
-					new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
-					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
+			
+			currentVectorView.setInput(
+				new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + sliceStep * something }),
+				new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
+				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 
+				1, 1
+			);
 
-			iterTCpx = String.valueOf(iterZ);
-			namePath = VectVelZFolder + "/VectVelZ_" + iterTCpx + ".jpg";
+			iterVel = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+			namePath = VectVelZFolder + "/VectVelZ_" + iterVel + ".jpg";
 			figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
 			otherAnnotation.setText(figName);
-
+			
 			vectorScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 		}
-
+		
 		vectorDisplayer.setVisTransform(symmetricRepeat);
 		vectorDisplayer.getVectorDisplayQuantity().setFieldFunction(userFieldFunction);
 		vectorDisplayer.getVectorDisplayQuantity().setRange(scaleVel);
+		// Set the coordinate to the x-axis
 		coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 1.0, 0.0, 0.0 }));
-
+		
 		for (int iterX = -1; iterX < 60; iterX++) {
-
+			progress("X-Axis", iterX, 60);
+			
 			coordinate.setCoordinate(units, units, units,
 					new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.0 }));
 			vectorScene.setMeshOverrideMode(0);
-			currentView_1.setInput(new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.5 }),
+			currentVectorView.setInput(new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.5 }),
 					new DoubleVector(new double[] { -40 - 0.8 + sliceStep * iterX, 0.0, 1.0 }),
 					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
@@ -713,22 +739,30 @@ public class PostProcessing extends StarMacro {
 			otherAnnotation.setText(figName);
 
 			vectorScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-			String repeatedHash = new String(new char[iterX + 1]).replace("\0", "#");
-			String repeatedDelta = new String(new char[((int) 60)  - (iterX + 1)]).replace("\0", "-");
-			
-			log("{X-Axis}: " + repeatedHash + repeatedDelta + String.format("%d/%d Done.", (iterX), (int) 60 - 1));
-
 		}
 
 		log("Finished.");
 	}
 
+	/**
+	 * A logging utility for debugging and additional information. Needs
+	 * initialization beforehand
+	 */
 	private void log(Object x) {
-		/**
-		 * A logging utility for debugging and additional information. Needs
-		 * initialization beforehand
-		 */
-		// System.out.println("[LOG]: " + x); // This logs in the terminal if you've run STAR-CCM through shell.
-		simulation.println("[LOG]: " + x); // This logs in the output window in the program itself.
+		// System.out.println("[LOG]: " + x); 	// This logs only in the terminal if you've run STAR-CCM through shell.
+		simulation.println("[LOG]: " + x); 		// This logs in the output window in the program itself and the terminal.
+	}
+
+	/**
+	 * Prints a progress bar with $done hashtags and $(all - done) dashes. Needs
+	 * initialization beforehand because of the implicit use of log();
+	 */
+	private void progress(String mode, int done, int all) {
+		
+		if (done < 0) done = 0;
+		String repeatedHash = new String(new char[done]).replace("\0", "#");
+		String repeatedDelta = new String(new char[((int) all)  - (done + 1)]).replace("\0", "-");
+
+		log(String.format("{%s}: ", mode) + repeatedHash + repeatedDelta + String.format(" %d/%d Done.", done, (int) all - 1));
 	}
 }
