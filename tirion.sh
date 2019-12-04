@@ -32,7 +32,7 @@ function finishedJob {
 trap cleanup 2;
 trap finishedJob 0;
 
-[ -z "$SLURM_NTASKS" ] || initSLURMenv
+[ -z "$SLURM_NTASKS" ] || initSLURMenv()
 
 # {?} will be replaced with actual values.
 macroPath={?};
