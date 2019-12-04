@@ -18,6 +18,7 @@
 
 power_on_demand_license="JFUOnAckN/148GnNZ+f2nQ";
 export CDLMD_LICENSE_FILE="1999@flex.cd-adapco.com"
+export nodelist=""
 
 function cleanup {                                                                                                                                                   
    echo "[!] Tirion framework exiting..."
@@ -26,6 +27,7 @@ function cleanup {
 
 function finishedJob {
     echo "[*] Exited gracefully."
+    rm $nodelist
     exit 0
 }
 
@@ -50,8 +52,8 @@ function initSLURMenv {
     # ... Load other modules here
     module load dc-star-ccm+/14.04.013
     export CDLMD_LICENSE_FILE="1999@172.40.11.246"
-    echo "[-] Building a machine file..."
-    export nodelist="./temp/slurmhosts.$SLURM_JOB_ID.txt"
+    nodelist="./temp/slurmhosts.$SLURM_JOB_ID.txt"
+    echo "[-] Building a machine file to $nodelist."
     srun hostname -s &> $nodelist
 }
 
@@ -90,9 +92,9 @@ function main {
              -tokensonly\
              -rsh rsh\
              -np $cores\
-             -machinefile $nodelist\
              -mpi intel\
              -hardwarebatch\
+             -machinefile $nodelist\
              -batch $macroPath\
              $simPath
     fi
@@ -122,5 +124,3 @@ function convert_to_videos {
 }
 
 main
-
-rm $nodelist
