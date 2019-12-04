@@ -1,12 +1,18 @@
 #!/bin/bash
 # Tirion framework... Made for Formula Student Team Delft.
-# Interface script for now. TODO: Future to be changed with a fully functional Web UI.
+# TODO: Future to be changed with a fully functional Web UI.
 # Default output is in the current folder
 
-macroPath="./src/main/PostProcessing.java"; #Add the absolute path here if you want to run ./tirion.sh from everywhere
+# DO NOT CHANGE ANYTHING UNLESS APPROVED
+# This script is meta-modified before job submission
+
+#Add the absolute path here if you want to run ./tirion.sh from everywhere
+macroPath="./src/main/PostProcessing.java"; 
 simPath=$1;
 cores=$2;
 starccm="starccm+"
+
+#&DEBEL
 # starccm="/opt/CD-adapco/STAR-CCM+11.04.012-R8/star/bin/starccm+"
 
 export CDLMD_LICENSE_FILE="1999@flex.cd-adapco.com"
