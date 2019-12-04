@@ -31,6 +31,15 @@ function finishedJob {
     exit 0
 }
 
+function initSLURMenv {
+    # ... Load other modules here
+    module load dc-star-ccm+/14.04.013
+    export CDLMD_LICENSE_FILE="1999@172.40.11.246"
+    nodelist="./temp/slurmhosts.$SLURM_JOB_ID.txt"
+    echo "[-] Building a machine file to $nodelist."
+    srun hostname -s &> $nodelist
+}
+
 trap cleanup 2;
 trap finishedJob 0;
 
@@ -47,15 +56,6 @@ starccm="starccm+"
 
 [ $macroPath == {?} ] && echo "Not designed to be run like this." && exit 0
 [ $simPath == {?} ] && echo "Not designed to be run like this." && exit 0
-
-function initSLURMenv {
-    # ... Load other modules here
-    module load dc-star-ccm+/14.04.013
-    export CDLMD_LICENSE_FILE="1999@172.40.11.246"
-    nodelist="./temp/slurmhosts.$SLURM_JOB_ID.txt"
-    echo "[-] Building a machine file to $nodelist."
-    srun hostname -s &> $nodelist
-}
 
 function main {
     echo "[-] Initializing Tirion framework...";
