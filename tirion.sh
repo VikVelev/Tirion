@@ -91,7 +91,7 @@ function main {
         $starccm\
              -jvmargs '-server'\
              -tokensonly\
-             -rsh rsh\
+             -rsh ssh\
              -mpi intel\
              -np $cores\
              -machinefile $nodelist\
