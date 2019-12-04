@@ -36,7 +36,6 @@ def cleanup():
     print("Cleaning up...")
     if args.temp == 1:
         os.remove(file_name)
-    exit(0)
 
 signal.signal(signal.SIGINT, cleanup)
 signal.signal(signal.SIGTERM, cleanup)
