@@ -91,9 +91,8 @@ function main {
              -jvmargs '-server'\
              -tokensonly\
              -rsh rsh\
-             -np $cores\
              -mpi intel\
-             -hardwarebatch\
+             -np $cores\
              -machinefile $nodelist\
              -batch $macroPath\
              $simPath
