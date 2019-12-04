@@ -37,7 +37,7 @@ trap finishedJob 0;
 # {?} will be replaced with actual values.
 macroPath={?};
 simPath={?};
-cores=$SLURM_NTASKS;
+cores="$SLURM_NTASKS";
 starccm="starccm+"
 # starccm="/opt/CD-adapco/STAR-CCM+11.04.012-R8/star/bin/starccm+"
 

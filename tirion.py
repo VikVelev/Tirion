@@ -33,7 +33,6 @@ file_name = './temp/tirion.job.%s.sh'%(args.name)
 
 @atexit.register
 def cleanup():
-    print("Cleaning up...")
     if args.temp == 1:
         os.remove(file_name)
 
