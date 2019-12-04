@@ -1,4 +1,4 @@
-#/usr/bin/python
+#!/cm/shared/apps/STAR-CCM+2019.2.1/14.04.013/STAR-CCM+14.04.013/star/bin/python3
 
 import argparse
 import subprocess
