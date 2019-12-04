@@ -57,7 +57,7 @@ for i, line in enumerate(line_list):
     if re.match("#SBATCH --nodes", line) is not None:
         line_list[i] = line.replace("{?}", str(args.nodes))
         
-    if re.match("#SBATCH --n-tasks-per-node=", line) is not None:
+    if re.match("#SBATCH --ntasks-per-node=", line) is not None:
         line_list[i] = line.replace("{?}", str(args.cores))
     
     if re.match("#SBATCH -o", line) is not None:
