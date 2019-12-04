@@ -10,7 +10,7 @@
 #SBATCH --nodes={?}
 #SBATCH --ntasks-per-node={?}
 #SBATCH -o {?}./%j.out
-#SBATCH -x cn22
+#SBATCH -w cn22
 
 # Tirion framework... Made for Formula Student Team Delft.
 # TODO: Future to be changed with a fully functional Web UI.
