@@ -8,7 +8,6 @@ import os
 import atexit
 import signal
 
-file_name = './temp/tirion.job.%s.sh'%(int(time.time()))
 
 parser = argparse.ArgumentParser(prog='Tirion', description='A framework for STARCCM+ CFD Processing. Written for Formula Student Team Delft.')
 
@@ -27,6 +26,10 @@ parser.add_argument('--symmetry', type=bool, help='A flag to enable symmetry. [!
 parser.add_argument('--type', metavar='-t', type=str, help='Type of processing: meshing | simulation | post-processing. Default is all.[!stub(wip)]')
 
 args = parser.parse_args()
+
+# file_name = './temp/tirion.job.%s.sh'%(int(time.time()))
+file_name = './temp/tirion.job.%s.sh'%(args.name)
+
 
 @atexit.register
 def cleanup():
