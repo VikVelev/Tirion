@@ -8,7 +8,7 @@
 # Slurm arguments [to be parsed] ({?} to be replaces with actual values)
 #SBATCH -J {?}
 #SBATCH --nodes={?}
-#SBATCH --n-tasks-per-node={?}
+#SBATCH --ntasks-per-node={?}
 #SBATCH -o {?}./%j.out
 #SBATCH -x cn22
 
