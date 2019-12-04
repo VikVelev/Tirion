@@ -7,9 +7,10 @@
 
 # Slurm arguments [to be parsed] ({?} to be replaces with actual values)
 #SBATCH -J {?}
-#SBATCH --nodes {?}
+#SBATCH --nodes={?}
 #SBATCH --n-tasks-per-node={?}
 #SBATCH -o {?}./%j.out
+#SBATCH -x cn22
 
 # Tirion framework... Made for Formula Student Team Delft.
 # TODO: Future to be changed with a fully functional Web UI.
