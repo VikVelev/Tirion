@@ -94,7 +94,8 @@ function main {
              -rsh ssh\
              -mpi intel\
              -np $cores\
-             -machinefile $nodelist\
+             -machinefile $nodelist\\
+             -hardwarebatch\
              -batch $macroPath\
              $simPath
     fi
