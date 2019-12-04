@@ -87,6 +87,7 @@ function main {
             -hardwarebatch\
             -batch $macroPath
     else
+        echo "[-] Running in a SLURM Environment Cluster..." 
         $starccm\
              -jvmargs '-server'\
              -tokensonly\
