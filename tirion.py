@@ -16,7 +16,7 @@ parser.add_argument('--simulation', metavar="-s", type=str, help='Path to the .s
 parser.add_argument('--nodes', metavar='-n', default=1, type=int, help='Number of nodes to request the resource management system for.', required=True)
 parser.add_argument('--cores', metavar='-c', type=int, help='Number of cores per node.', required=True)
 parser.add_argument('--log', metavar='-l', default="", type=str, help="Path to which to save the logs from SLURM.")
-parser.add_argument('--temp', default=1, type=int, help="Should the generated temp job.sh file be saved")
+parser.add_argument('--temp', default=0, type=int, help="Should the generated temp job.sh file be saved")
 
 # WIP
 #(iterations, !symmetry, types, output) TODO: Merge mesh and pp scripts
