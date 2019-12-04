@@ -34,7 +34,7 @@ function finishedJob {
 trap cleanup 2;
 trap finishedJob 0;
 
-if [ -z "$SLURM_NTASKS" ]; then
+if [ -n "$SLURM_NTASKS" ]; then
     initSLURMenv
 fi
 
