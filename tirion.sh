@@ -50,10 +50,9 @@ function initSLURMenv {
     # ... Load other modules here
     module load dc-star-ccm+/14.04.013
     export CDLMD_LICENSE_FILE="1999@172.40.11.246"
+    echo "[-] Building a machine file..."
     nodelist="./temp/slurmhosts.$SLURM_JOB_ID.txt"
     srun hostname -s &> $nodelist
-
-
 }
 
 function main {
