@@ -48,10 +48,10 @@ if [ -n "$SLURM_NTASKS" ]; then
 fi
 
 # {?} will be replaced with actual values.
-macroPath={?};
+macrosPath={?};
 simPath={?};
 cores="$SLURM_NTASKS";
-starccm="starccm+"
+starccm="starccm+";
 # starccm="/opt/CD-adapco/STAR-CCM+11.04.012-R8/star/bin/starccm+"
 
 [ $macroPath == {?} ] && echo "Not designed to be run like this." && exit 0
@@ -85,7 +85,7 @@ function main {
             -licpath $CDLMD_LICENSE_FILE\
             -power $simPath\
             -hardwarebatch\
-            -batch $macroPath
+            -batch $meshPath,$ppPath
     else
         echo "[-] Running in a SLURM Environment Cluster..." 
         $starccm\
@@ -95,7 +95,7 @@ function main {
              -mpi intel\
              -np $cores\
              -machinefile $nodelist\
-             -batch $macroPath\
+             -batch $meshPath,$ppPath
              $simPath
     fi
 

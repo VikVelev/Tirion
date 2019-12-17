@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 #!/cm/shared/apps/STAR-CCM+2019.2.1/14.04.013/STAR-CCM+14.04.013/star/bin/python3
 
 import argparse
@@ -11,20 +12,21 @@ import signal
 
 parser = argparse.ArgumentParser(prog='Tirion', description='A framework for STARCCM+ CFD Processing. Written for Formula Student Team Delft.')
 
-parser.add_argument('--name', metavar="-j", type=str, help='Job name.', required=True)
+parser.add_argument('--job_name', metavar="-j", type=str, help='Job name.', required=True)
 parser.add_argument('--simulation', metavar="-s", type=str, help='Path to the .sim file to run processing on.', required=True)
 parser.add_argument('--nodes', metavar='-n', default=1, type=int, help='Number of nodes to request the resource management system for.', required=True)
 parser.add_argument('--cores', metavar='-c', type=int, help='Number of cores per node.', required=True)
 parser.add_argument('--log', metavar='-l', default="", type=str, help="Path to which to save the logs from SLURM.")
 parser.add_argument('--temp', default=0, type=int, help="Should the generated temp job.sh file be saved")
+parser.add_argumetn('--full', type=str, help="Use the full package simulation, postprocessing, exporting (wip, exporting is not working yet).")
 
 # WIP
 #(iterations, !symmetry, types, output) TODO: Merge mesh and pp scripts
+parser.add_argument('--cornering', metavar='-cn', type=int, default=0, help='A flag to enable cornering.')
 parser.add_argument('--iterations', metavar="-i", default=3000, type=int, help='Number of iterations to run the simulation for.')
 parser.add_argument('--output', metavar='-o', type=str, help='Ouptut directory')
-parser.add_argument('--symmetry', type=bool, help='A flag to enable symmetry. [!stub(wip)]')
+parser.add_argument('--symmetry', type=bool, help='[!stub(wip)] A flag to enable symmetry. If cornering is enabled this doesn\'t matter')
 parser.add_argument('--type', metavar='-t', type=str, help='Type of processing: meshing | simulation | post-processing. Default is all.[!stub(wip)]')
-
 args = parser.parse_args()
 
 # file_name = './temp/tirion.job.%s.sh'%(int(time.time()))
@@ -64,12 +66,18 @@ for i, line in enumerate(line_list):
         line_list[i] = line.replace("{?}", args.log)
 
     # Parse for macroPath, Simulation directory
-    if re.match("macroPath=", line) is not None:
-        macros = "./src/main/PostProcessing.java"
+    if re.match("macrosPath=", line) is not None:
+        macros = "./src/main/MainMacro.java, ./src/main/PostProcessing.java"
+        
+        if args.full is not None:
+            macros = "./src/main/FullCore.java"    
+        
         line_list[i] = line.replace("{?}", macros)
     
     if re.match("simPath=", line) is not None:
         line_list[i] = line.replace("{?}", args.simulation)
+        
+        
 
 file_to_write = open(file_name, 'w')
 file_to_write.writelines(line_list)
