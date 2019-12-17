@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 #!/cm/shared/apps/STAR-CCM+2019.2.1/14.04.013/STAR-CCM+14.04.013/star/bin/python3
 
 import argparse
@@ -73,9 +72,9 @@ for i, line in enumerate(line_list):
         
         if args.pp == 1:
             macros = './src/main/PostProcessing'
-        else if args.meshing == 1:
+        elif args.meshing == 1:
             macros = './src/main/MainMacro.java'
-        else if args.full == 1:
+        elif args.full == 1:
             macros = "./src/main/FullCore.java"
         
         line_list[i] = line.replace("{?}", macros)
