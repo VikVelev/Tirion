@@ -95,7 +95,7 @@ function main {
              -mpi intel\
              -np $cores\
              -machinefile $nodelist\
-             -batch $macrosPath
+             -batch $macrosPath\
              $simPath
     fi
 
