@@ -11,7 +11,7 @@ import signal
 
 parser = argparse.ArgumentParser(prog='Tirion', description='A framework for STARCCM+ CFD Processing. Written for Formula Student Team Delft.')
 
-parser.add_argument('--job_name', metavar="-j", type=str, help='Job name.', required=True)
+parser.add_argument('--name', metavar="-j", type=str, help='Job name.', required=True)
 parser.add_argument('--simulation', metavar="-s", type=str, help='Path to the .sim file to run processing on.', required=True)
 parser.add_argument('--nodes', metavar='-n', default=1, type=int, help='Number of nodes to request the resource management system for.', required=True)
 parser.add_argument('--cores', metavar='-c', type=int, help='Number of cores per node.', required=True)
