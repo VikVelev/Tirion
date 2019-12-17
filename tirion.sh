@@ -29,14 +29,15 @@ function cleanup {
 }
 
 function finishedJob {
-    echo "[*] Exited gracefully."
 
     if [ -n "$SLURM_NTASKS" ]; then
+        echo "[-] Moving simmed file."
         rm $nodelist
-        mv $simPath@0$iterations /shared_scratch_volume/Formula_Student_Team_Delft/simulations/$USER/
-        echo '[*] Moved simmed files to /shared_scratch_volume/Formula_Student_Team_Delft/simulations/$USER/'
+        ssh head01 "mv $simPath@0$iterations /shared_scratch_volume/Formula_Student_Team_Delft/simulations/$USER/"
+        echo "[*] Moved simmed files to /shared_scratch_volume/Formula_Student_Team_Delft/simulations/$USER/"
     fi
 
+    echo "[*] Exited gracefully."
     exit 0
 }
 
@@ -109,7 +110,6 @@ function main {
              $simPath
     fi
 
-    
     # WIP
     # convert_to_videos
 }
@@ -135,3 +135,4 @@ function convert_to_videos {
 }
 
 main
+
