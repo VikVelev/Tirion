@@ -8,7 +8,7 @@ import java.io.*;
 import star.common.*;
 import star.base.neo.*;
  
-import star.common.*;
+import star.vis.*;
 import star.coupledflow.*;
 import star.base.neo.*;
 import star.flow.*;
@@ -79,7 +79,6 @@ public class FullCore extends StarMacro {
 
 
 		/** The whole sequential CFD pipeline */
-		initialize();
 		runSimulation(maximumIterations);
 		runPostProcessing();
 		// csvDataExport();
