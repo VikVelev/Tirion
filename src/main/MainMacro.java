@@ -53,9 +53,9 @@ public class MainMacro extends StarMacro {
 		// [JVMH] manageImports();
 		initialize();
 		runSimulation(maximumIterations);
-		runPostProcessing();
-		csvDataExport();
-		pythonPostProcExport();
+		// runPostProcessing();
+		// csvDataExport();
+		// pythonPostProcExport();
 
 		/** 
 		 * You can just comment out any step of the pipeline and the rest will work 

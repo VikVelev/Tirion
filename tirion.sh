@@ -1,11 +1,24 @@
 #!/bin/bash
+#STATUS: [BASE]
+
+###### DO NOT CHANGE ANYTHING UNLESS APPROVED ######
+# Status will be changed to [META-MODIFIED] in the temporary file
+# This script is used as a base and is meta-modified before job submission
+
+# Slurm arguments [to be parsed] ({?} to be replaces with actual values)
+#SBATCH -J {?}
+#SBATCH --nodes={?}
+#SBATCH --ntasks-per-node={?}
+#SBATCH -o {?}./%j.out
+#SBATCH -w cn22
+
 # Tirion framework... Made for Formula Student Team Delft.
-# Interface script for now. TODO: Future to be changed with a fully functional Web UI.
+# TODO: Future to be changed with a fully functional Web UI.
 # Default output is in the current folder
 
-macroPath="./src/main/PostProcessing.java"; #Add the absolute path here if you want to run ./tirion.sh from everywhere
-simPath=$1;
-cores=$2;
+power_on_demand_license="JFUOnAckN/148GnNZ+f2nQ";
+export CDLMD_LICENSE_FILE="1999@flex.cd-adapco.com"
+export nodelist=""
 
 function cleanup {                                                                                                                                                   
    echo "[!] Tirion framework exiting..."
@@ -14,19 +27,40 @@ function cleanup {
 
 function finishedJob {
     echo "[*] Exited gracefully."
+    rm $nodelist
     exit 0
 }
+
+function initSLURMenv {
+    # ... Load other modules here
+    module load dc-star-ccm+/14.04.013
+    export CDLMD_LICENSE_FILE="1999@172.40.11.246"
+    nodelist="./temp/slurmhosts.$SLURM_JOB_ID.txt"
+    echo "[-] Building a machine file to $nodelist."
+    srun hostname -s &> $nodelist
+}
+
+trap cleanup 2;
+trap finishedJob 0;
+
+if [ -n "$SLURM_NTASKS" ]; then
+    initSLURMenv
+fi
+
+# {?} will be replaced with actual values.
+macrosPath={?};
+simPath={?};
+cores="$SLURM_NTASKS";
+starccm="starccm+";
+# starccm="/opt/CD-adapco/STAR-CCM+11.04.012-R8/star/bin/starccm+"
+
+[ $macroPath == {?} ] && echo "Not designed to be run like this." && exit 0
+[ $simPath == {?} ] && echo "Not designed to be run like this." && exit 0
 
 function main {
     echo "[-] Initializing Tirion framework...";
     
     sleep 1;
-
-    trap cleanup 2;
-    trap finishedJob 0;
-
-    license_path="1999@flex.cd-adapco.com";
-    power_on_demand_license="TtRoFR472Ew3lLUCvel7JQ";
 
     if [ ! -n "$cores" ]; then
         cores=$(( $(grep -c ^processor /proc/cpuinfo) / 2 ));
@@ -40,16 +74,37 @@ function main {
     echo "    -- MainMacro Script: $macroPath"
     echo "[%] Running STAR-CCM+ with $cores cores configured..."
 
-    sleep 2
+    sleep 1
 
-    starccm+ -rsh ssh -np $cores -podkey $power_on_demand_license -licpath $license_path -power $simPath -batch $macroPath;
+    if [ -z $SLURM_NTASKS ]; then 
+        $starccm\
+            -jvmargs '-server'\
+            -rsh ssh\
+            -np $cores\
+            -podkey $power_on_demand_license\
+            -licpath $CDLMD_LICENSE_FILE\
+            -power $simPath\
+            -hardwarebatch\
+            -batch $meshPath,$ppPath
+    else
+        echo "[-] Running in a SLURM Environment Cluster..." 
+        $starccm\
+             -jvmargs '-server'\
+             -tokensonly\
+             -rsh ssh\
+             -mpi intel\
+             -np $cores\
+             -machinefile $nodelist\
+             -batch $meshPath,$ppPath
+             $simPath
+    fi
 
-   #convert_to_videos
-
+    # WIP
+    # convert_to_videos
 }
 
+# WIP
 function convert_to_videos {
-    
     currentDir=$(pwd);
     cd $(dirname $simPath);
     
@@ -68,4 +123,4 @@ function convert_to_videos {
     done
 }
 
-convert_to_videos
+main
