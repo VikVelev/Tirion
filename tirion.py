@@ -67,15 +67,18 @@ for i, line in enumerate(line_list):
 
     # Parse for macroPath, Simulation directory
     if re.match("macrosPath=", line) is not None:
-        
-        macros = "./src/main/MainMacro.java, ./src/main/PostProcessing.java"
-        
         if args.pp == 1:
+            print("Post-processing...")
             macros = './src/main/PostProcessing.java'
         elif args.meshing == 1:
+            print("Running simulation.")
             macros = './src/main/MainMacro.java'
         elif args.full == 1:
+            print("Going full core.")
             macros = "./src/main/FullCore.java"
+        else:
+            print("[DEFAULT]: Everything is running.")
+            macros = "./src/main/MainMacro.java, ./src/main/PostProcessing.java"
         
         line_list[i] = line.replace("{?}", macros)
     
