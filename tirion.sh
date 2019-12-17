@@ -28,7 +28,10 @@ function cleanup {
 
 function finishedJob {
     echo "[*] Exited gracefully."
-    rm $nodelist
+    if [ -n "$SLURM_NTASKS" ]; then
+        rm $nodelist
+        mv $simPath /shared_scratch_volume/Formula_Student_Team_Delft/simulations/$USER/
+    fi 
     exit 0
 }
 
