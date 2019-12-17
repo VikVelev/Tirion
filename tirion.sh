@@ -33,7 +33,7 @@ function finishedJob {
 
     if [ -n "$SLURM_NTASKS" ]; then
         rm $nodelist
-        mv $simPath@$iterations /shared_scratch_volume/Formula_Student_Team_Delft/simulations/$USER/
+        mv $simPath@0$iterations /shared_scratch_volume/Formula_Student_Team_Delft/simulations/$USER/
         echo '[*] Moved simmed files to /shared_scratch_volume/Formula_Student_Team_Delft/simulations/$USER/'
     fi
 
