@@ -610,138 +610,138 @@ public class PostProcessing extends StarMacro {
 
 		// scalarScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
 
-		log("Calculating Vector Velocities.");
+		// log("Calculating Vector Velocities.");
 
-		simulation.getSceneManager().createVectorScene("Vector Scene", "Outline", "Vector");
-		Scene vectorScene = simulation.getSceneManager().getScene("Vector Scene 1");
-		vectorScene.initializeAndWait();
+		// simulation.getSceneManager().createVectorScene("Vector Scene", "Outline", "Vector");
+		// Scene vectorScene = simulation.getSceneManager().getScene("Vector Scene 1");
+		// vectorScene.initializeAndWait();
 
-		PartDisplayer vectorPartDisplayer = ((PartDisplayer) vectorScene.getDisplayerManager()
-				.getDisplayer("Outline 1"));
-		VectorDisplayer vectorDisplayer = ((VectorDisplayer) vectorScene.getDisplayerManager()
-				.getDisplayer("Vector 1"));
-		vectorDisplayer.initialize();
+		// PartDisplayer vectorPartDisplayer = ((PartDisplayer) vectorScene.getDisplayerManager()
+		// 		.getDisplayer("Outline 1"));
+		// VectorDisplayer vectorDisplayer = ((VectorDisplayer) vectorScene.getDisplayerManager()
+		// 		.getDisplayer("Vector 1"));
+		// vectorDisplayer.initialize();
 
-		vectorScene.open(true);
+		// vectorScene.open(true);
 
-		vectorDisplayer.setDisplayMode(1);
-		vectorDisplayer.getInputParts().setQuery(null);
-		vectorDisplayer.getInputParts().setObjects(planeSection);
-		vectorDisplayer.getVectorDisplayQuantity().setClip(clipping);
+		// vectorDisplayer.setDisplayMode(1);
+		// vectorDisplayer.getInputParts().setQuery(null);
+		// vectorDisplayer.getInputParts().setObjects(planeSection);
+		// vectorDisplayer.getVectorDisplayQuantity().setClip(clipping);
 
-		UserFieldFunction userFieldFunction = ((UserFieldFunction) simulation.getFieldFunctionManager()
-				.getFunction("Mean of Velocity"));
+		// UserFieldFunction userFieldFunction = ((UserFieldFunction) simulation.getFieldFunctionManager()
+		// 		.getFunction("Mean of Velocity"));
 
-		vectorDisplayer.getVectorDisplayQuantity().setFieldFunction(userFieldFunction);
-		vectorDisplayer.getVectorDisplayQuantity().setRange(scaleVel);
-		vectorScene.getDisplayerManager().deleteDisplayers(new NeoObjectVector(new Object[] { vectorPartDisplayer }));
+		// vectorDisplayer.getVectorDisplayQuantity().setFieldFunction(userFieldFunction);
+		// vectorDisplayer.getVectorDisplayQuantity().setRange(scaleVel);
+		// vectorScene.getDisplayerManager().deleteDisplayers(new NeoObjectVector(new Object[] { vectorPartDisplayer }));
 
-		CurrentView currentVectorView = vectorScene.getCurrentView();
-		coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0, 0, 1 }));
+		// CurrentView currentVectorView = vectorScene.getCurrentView();
+		// coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0, 0, 1 }));
 
-		SimpleAnnotation otherAnnotation = simulation.getAnnotationManager().createSimpleAnnotation();
-		otherAnnotation.setPresentationName("Figure_name");
-		otherAnnotation.setDefaultHeight(0.03);
+		// SimpleAnnotation otherAnnotation = simulation.getAnnotationManager().createSimpleAnnotation();
+		// otherAnnotation.setPresentationName("Figure_name");
+		// otherAnnotation.setDefaultHeight(0.03);
 
-		FixedAspectAnnotationProp fixedAspectAnnotationProp_2 = (FixedAspectAnnotationProp) vectorScene
-				.getAnnotationPropManager().createPropForAnnotation(otherAnnotation);
+		// FixedAspectAnnotationProp fixedAspectAnnotationProp_2 = (FixedAspectAnnotationProp) vectorScene
+		// 		.getAnnotationPropManager().createPropForAnnotation(otherAnnotation);
 
-		vectorDisplayer.getVectorDisplayQuantity().setFieldFunction(userFieldFunction);
-		vectorDisplayer.getVectorDisplayQuantity().setRange(scaleVel);
-		coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0.0, 1.0, 0.0 }));
+		// vectorDisplayer.getVectorDisplayQuantity().setFieldFunction(userFieldFunction);
+		// vectorDisplayer.getVectorDisplayQuantity().setRange(scaleVel);
+		// coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0.0, 1.0, 0.0 }));
 
-		for (int iterY = 0; iterY < 17; iterY++) {
-			progress("Y-Axis", (iterY), 17);
+		// for (int iterY = 0; iterY < 17; iterY++) {
+		// 	progress("Y-Axis", (iterY), 17);
 			
-			coordinate.setCoordinate(units, units, units,
-					new DoubleVector(new double[] { 0.0, 0.0001 + sliceStep * iterY, 0.0 }));
-			vectorScene.setMeshOverrideMode(0);
-			currentVectorView.setInput(new DoubleVector(new double[] { 0.6, 0.0001 + sliceStep * iterY, 0.5 }),
-					new DoubleVector(new double[] { 0.6, -50 + sliceStep * iterY, 1.0 }),
-					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
+		// 	coordinate.setCoordinate(units, units, units,
+		// 			new DoubleVector(new double[] { 0.0, 0.0001 + sliceStep * iterY, 0.0 }));
+		// 	vectorScene.setMeshOverrideMode(0);
+		// 	currentVectorView.setInput(new DoubleVector(new double[] { 0.6, 0.0001 + sliceStep * iterY, 0.5 }),
+		// 			new DoubleVector(new double[] { 0.6, -50 + sliceStep * iterY, 1.0 }),
+		// 			new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterVel = (iterY >= 10) ? String.valueOf(iterY) : "0" + String.valueOf(iterY);
-			figName = simName + " " + "y=" + String.format("%.2f", sliceStep * iterY) + "m";
-			otherAnnotation.setText(figName);
-			namePath = VectVelYFolder + "/VectVelY_" + iterVel + ".png";
+		// 	iterVel = (iterY >= 10) ? String.valueOf(iterY) : "0" + String.valueOf(iterY);
+		// 	figName = simName + " " + "y=" + String.format("%.2f", sliceStep * iterY) + "m";
+		// 	otherAnnotation.setText(figName);
+		// 	namePath = VectVelYFolder + "/VectVelY_" + iterVel + ".png";
 			
-			// log(resolvePath(namePath));
-			vectorScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-		}
+		// 	// log(resolvePath(namePath));
+		// 	vectorScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// }
 
-		vectorDisplayer.setVisTransform(symmetricRepeat);
-		coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0, 0, 1 }));
+		// vectorDisplayer.setVisTransform(symmetricRepeat);
+		// coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 0, 0, 1 }));
 
-		for (int iterZ = 0; iterZ < 6; iterZ++) {
-			progress("Z-Axis", iterZ, 27);
+		// for (int iterZ = 0; iterZ < 6; iterZ++) {
+		// 	progress("Z-Axis", iterZ, 27);
 
-			coordinate.setCoordinate(units, units, units,
-					new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + 0.01 * iterZ }));
-			vectorScene.setMeshOverrideMode(0);
+		// 	coordinate.setCoordinate(units, units, units,
+		// 			new DoubleVector(new double[] { 0.0, 0.0, 0.0001 + 0.01 * iterZ }));
+		// 	vectorScene.setMeshOverrideMode(0);
 
-			currentVectorView.setInput(new DoubleVector(
-				new double[] { 0.6, -0.1, 0.0001 + 0.01 * iterZ }),
-				new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
-				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 
-				1, 1
-			);
-			iterVel = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+		// 	currentVectorView.setInput(new DoubleVector(
+		// 		new double[] { 0.6, -0.1, 0.0001 + 0.01 * iterZ }),
+		// 		new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
+		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 
+		// 		1, 1
+		// 	);
+		// 	iterVel = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
 
-			namePath = VectVelZFolder + "/VectVelZ_" + iterVel + ".jpg";
-			figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
+		// 	namePath = VectVelZFolder + "/VectVelZ_" + iterVel + ".jpg";
+		// 	figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
 
-			otherAnnotation.setText(figName);
-			vectorScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-		}
+		// 	otherAnnotation.setText(figName);
+		// 	vectorScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// }
 
-		for (int iterZ = 6; iterZ < 27; iterZ++) {
-			progress("Z-Axis", iterZ, 27);
+		// for (int iterZ = 6; iterZ < 27; iterZ++) {
+		// 	progress("Z-Axis", iterZ, 27);
 			
-			int something = iterZ - 4;
-			coordinate.setCoordinate(units, units, units, 
-					new DoubleVector(new double[] { 
-						0.0, 0.0, 
-						0.0001 + sliceStep * something }));
-			vectorScene.setMeshOverrideMode(0);
+		// 	int something = iterZ - 4;
+		// 	coordinate.setCoordinate(units, units, units, 
+		// 			new DoubleVector(new double[] { 
+		// 				0.0, 0.0, 
+		// 				0.0001 + sliceStep * something }));
+		// 	vectorScene.setMeshOverrideMode(0);
 			
-			currentVectorView.setInput(
-				new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + sliceStep * something }),
-				new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
-				new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 
-				1, 1
-			);
+		// 	currentVectorView.setInput(
+		// 		new DoubleVector(new double[] { 0.6, -0.1, 0.0001 + sliceStep * something }),
+		// 		new DoubleVector(new double[] { 0.6, -0.1, 10.0 }),
+		// 		new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 
+		// 		1, 1
+		// 	);
 
-			iterVel = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
-			namePath = VectVelZFolder + "/VectVelZ_" + iterVel + ".jpg";
-			figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
-			otherAnnotation.setText(figName);
+		// 	iterVel = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
+		// 	namePath = VectVelZFolder + "/VectVelZ_" + iterVel + ".jpg";
+		// 	figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
+		// 	otherAnnotation.setText(figName);
 			
-			vectorScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-		}
+		// 	vectorScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// }
 		
-		vectorDisplayer.setVisTransform(symmetricRepeat);
-		vectorDisplayer.getVectorDisplayQuantity().setFieldFunction(userFieldFunction);
-		vectorDisplayer.getVectorDisplayQuantity().setRange(scaleVel);
-		// Set the coordinate to the x-axis
-		coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 1.0, 0.0, 0.0 }));
+		// vectorDisplayer.setVisTransform(symmetricRepeat);
+		// vectorDisplayer.getVectorDisplayQuantity().setFieldFunction(userFieldFunction);
+		// vectorDisplayer.getVectorDisplayQuantity().setRange(scaleVel);
+		// // Set the coordinate to the x-axis
+		// coordinate_1.setCoordinate(units, units, units, new DoubleVector(new double[] { 1.0, 0.0, 0.0 }));
 		
-		for (int iterX = -1; iterX < 60; iterX++) {
-			progress("X-Axis", iterX, 60);
+		// for (int iterX = -1; iterX < 60; iterX++) {
+		// 	progress("X-Axis", iterX, 60);
 			
-			coordinate.setCoordinate(units, units, units,
-					new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.0 }));
-			vectorScene.setMeshOverrideMode(0);
-			currentVectorView.setInput(new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.5 }),
-					new DoubleVector(new double[] { -40 - 0.8 + sliceStep * iterX, 0.0, 1.0 }),
-					new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
+		// 	coordinate.setCoordinate(units, units, units,
+		// 			new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.0 }));
+		// 	vectorScene.setMeshOverrideMode(0);
+		// 	currentVectorView.setInput(new DoubleVector(new double[] { -0.85 + sliceStep * iterX, 0.0, 0.5 }),
+		// 			new DoubleVector(new double[] { -40 - 0.8 + sliceStep * iterX, 0.0, 1.0 }),
+		// 			new DoubleVector(new double[] { 0.0, 0.0, 1.0 }), 1, 1);
 
-			iterVel = String.valueOf(iterX);
-			figName = simName + " " + "x=" + String.format("%.2f", sliceStep * iterX) + "m";
-			namePath = VectVelXFolder + "/VectVelX_" + iterVel + ".jpg";
-			otherAnnotation.setText(figName);
+		// 	iterVel = String.valueOf(iterX);
+		// 	figName = simName + " " + "x=" + String.format("%.2f", sliceStep * iterX) + "m";
+		// 	namePath = VectVelXFolder + "/VectVelX_" + iterVel + ".jpg";
+		// 	otherAnnotation.setText(figName);
 
-			vectorScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
-		}
+		// 	vectorScene.printAndWait(resolvePath(namePath), 2, 2200, 1300, true, false);
+		// }
 
 		log("Finished.");
 	}
