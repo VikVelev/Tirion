@@ -48,7 +48,7 @@ public class FullCore extends StarMacro {
 	// pulic String pwd = Paths.get(".").toAbsolutePath()
 	// public String projectPath = "/home/viktorv/Projects/FSTeamDelft/Tirion/";
 	
-	public Simulation simulation = getActiveSimulation();
+	public Simulation simulation;
 
 	private MeshPipelineController meshPipelineController;
 	private SolverStoppingCriterionManager solverCriterionManager;
@@ -75,8 +75,9 @@ public class FullCore extends StarMacro {
 		scaleSCp = new DoubleVector(new double[] { -5, 1 });
 		scaleTCp = new DoubleVector(new double[] { -.1, 1 });
 		scaleVel = new DoubleVector(new double[] { 0, 30 });
-		scaleVor = new DoubleVector(new double[] { 0, 1000 });
-
+        scaleVor = new DoubleVector(new double[] { 0, 1000 });
+        
+        simulation = getActiveSimulation();
 
 		/** The whole sequential CFD pipeline */
 		runSimulation(maximumIterations);
@@ -96,6 +97,7 @@ public class FullCore extends StarMacro {
 		 * The simulation will stop if the number of iterations has reached 
 		 * the previously specified "maximumIterations" (class global)
 		 * */
+        log("Meshing...");
 
 		meshPipelineController = simulation.get(MeshPipelineController.class);
 		solverCriterionManager = simulation.getSolverStoppingCriterionManager();
@@ -110,7 +112,10 @@ public class FullCore extends StarMacro {
 	}
 
     public void runPostProcessing() {
-		try {
+        
+        log("Post Processing...");
+
+        try {
 			execPostProcessing();
 		} catch(Exception e) {
 			log(e);
