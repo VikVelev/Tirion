@@ -8,7 +8,6 @@ import os
 import atexit
 import signal
 
-
 parser = argparse.ArgumentParser(prog='Tirion', description='A framework for STARCCM+ CFD Processing. Written for Formula Student Team Delft.')
 
 parser.add_argument('--name', metavar="-j", type=str, help='Job name.', required=True)
@@ -18,7 +17,7 @@ parser.add_argument('--cores', metavar='-c', type=int, help='Number of cores per
 parser.add_argument('--temp', default=0, type=int, help="Should the generated temp job.sh file be saved")
 parser.add_argument('--pp', default=0, type=int, help="Just post-process.")
 parser.add_argument('--meshing', default=0, type=int, help="Just mesh.")
-parser.add_argument('--full', default=0, type=int, help="Use the full package simulation, postprocessing, exporting (wip, exporting is not working yet).")
+parser.add_argument('--full', default=1, type=int, help="Use the full package simulation, postprocessing, exporting (wip, exporting is not working yet).")
 parser.add_argument('--log', metavar='-l', default="", type=str, help="Path to which to save the logs from SLURM.")
 
 # WIP
