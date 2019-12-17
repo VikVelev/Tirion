@@ -20,6 +20,7 @@ public class PostProcessing extends StarMacro {
 	private HashMap<String, DoubleVector> ranges;
 
 	public void execute() {
+		simulation = getActiveSimulation();
 		try {
 			run();
 		} catch(Exception e) {
@@ -70,7 +71,7 @@ public class PostProcessing extends StarMacro {
 		 * 
 		 */
 
-		simulation = getActiveSimulation();
+		// simulation = getActiveSimulation();
 
 		simName = simulation.getPresentationName();
 		simPath = simulation.getSessionDir();
