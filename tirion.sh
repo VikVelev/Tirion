@@ -54,7 +54,7 @@ cores="$SLURM_NTASKS";
 starccm="starccm+";
 # starccm="/opt/CD-adapco/STAR-CCM+11.04.012-R8/star/bin/starccm+"
 
-[ $macroPath == {?} ] && echo "Not designed to be run like this." && exit 0
+[ $macrosPath == {?} ] && echo "Not designed to be run like this." && exit 0
 [ $simPath == {?} ] && echo "Not designed to be run like this." && exit 0
 
 function main {
@@ -71,12 +71,13 @@ function main {
     echo "[*] Initialized."
     echo "[*] Loaded:"
     echo "    -- Simulation File: $simPath"
-    echo "    -- MainMacro Script: $macroPath"
+    echo "    -- Macro Script: $macrosPath"
     echo "[%] Running STAR-CCM+ with $cores cores configured..."
 
     sleep 1
 
     if [ -z $SLURM_NTASKS ]; then 
+        echo "[-] Running on a local cluster..." 
         $starccm\
             -jvmargs '-server'\
             -rsh ssh\
