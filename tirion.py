@@ -71,7 +71,7 @@ for i, line in enumerate(line_list):
         macros = "./src/main/MainMacro.java, ./src/main/PostProcessing.java"
         
         if args.pp == 1:
-            macros = './src/main/PostProcessing'
+            macros = './src/main/PostProcessing.java'
         elif args.meshing == 1:
             macros = './src/main/MainMacro.java'
         elif args.full == 1:
