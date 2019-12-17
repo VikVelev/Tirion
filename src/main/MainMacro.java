@@ -33,7 +33,7 @@ public class MainMacro extends StarMacro {
 
 	/** Change 'maximumIterations' to X to run */
 	
-	int maximumIterations = 3000;
+	int maximumIterations = 3500;
 
 	/** [JVMH] For future Inter cross-JVM communication hacks */
 	// Class CFDPipeline;

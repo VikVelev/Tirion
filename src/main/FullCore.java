@@ -32,7 +32,7 @@ public class FullCore extends StarMacro {
 	 * */
 
 	/** Change 'maximumIterations' to X to run */
-    int maximumIterations = 3000;
+    int maximumIterations = 3500;
 	
     private int clipping;
 	private DoubleVector scaleSCp;

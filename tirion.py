@@ -23,11 +23,11 @@ parser.add_argument('--log', metavar='-l', default="", type=str, help="Path to w
 
 # WIP
 #(iterations, !symmetry, types, output) TODO: Merge mesh and pp scripts
-parser.add_argument('--cornering', metavar='-cn', type=int, default=0, help='[WIP] A flag to enable cornering on processing.')
-parser.add_argument('--iterations', metavar="-i", default=3000, type=int, help='[WIP] Number of iterations to run the simulation for.')
-parser.add_argument('--output', metavar='-o', type=str, help='[WIP] Ouptut directory')
-parser.add_argument('--symmetry', type=bool, help='[!stub(wip)] A flag to enable symmetry. If cornering is enabled this doesn\'t matter')
-parser.add_argument('--type', metavar='-t', type=str, help='[WIP] Type of processing: meshing | simulation | post-processing. Default is all.[!stub(wip)]')
+# parser.add_argument('--cornering', metavar='-cn', type=int, default=0, help='[WIP] A flag to enable cornering on processing.')
+# parser.add_argument('--iterations', metavar="-i", default=3000, type=int, help='[WIP] Number of iterations to run the simulation for.')
+# parser.add_argument('--output', metavar='-o', type=str, help='[WIP] Ouptut directory')
+# parser.add_argument('--symmetry', type=bool, help='[!stub(wip)] A flag to enable symmetry. If cornering is enabled this doesn\'t matter')
+# parser.add_argument('--type', metavar='-t', type=str, help='[WIP] Type of processing: meshing | simulation | post-processing. Default is all.[!stub(wip)]')
 args = parser.parse_args()
 
 # file_name = './temp/tirion.job.%s.sh'%(int(time.time()))

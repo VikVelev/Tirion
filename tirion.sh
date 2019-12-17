@@ -10,7 +10,8 @@
 #SBATCH --nodes={?}
 #SBATCH --ntasks-per-node={?}
 #SBATCH -o {?}./%j.out
-#SBATCH -w cn22
+#SBATCH -p Formula_Student_Team_Delft
+#TEMPBATCH -w cn22
 
 # Tirion framework... Made for Formula Student Team Delft.
 # TODO: Future to be changed with a fully functional Web UI.
@@ -100,6 +101,7 @@ function main {
              $simPath
     fi
 
+    
     # WIP
     # convert_to_videos
 }
