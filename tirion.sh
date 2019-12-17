@@ -21,6 +21,8 @@ power_on_demand_license="JFUOnAckN/148GnNZ+f2nQ";
 export CDLMD_LICENSE_FILE="1999@flex.cd-adapco.com"
 export nodelist=""
 
+iterations=3500
+
 function cleanup {                                                                                                                                                   
    echo "[!] Tirion framework exiting..."
    exit 0
@@ -28,10 +30,13 @@ function cleanup {
 
 function finishedJob {
     echo "[*] Exited gracefully."
+
     if [ -n "$SLURM_NTASKS" ]; then
         rm $nodelist
-        mv $simPath /shared_scratch_volume/Formula_Student_Team_Delft/simulations/$USER/
-    fi 
+        mv $simPath@$iterations /shared_scratch_volume/Formula_Student_Team_Delft/simulations/$USER/
+        echo '[*] Moved simmed files to /shared_scratch_volume/Formula_Student_Team_Delft/simulations/$USER/'
+    fi
+
     exit 0
 }
 
