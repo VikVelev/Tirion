@@ -71,6 +71,9 @@ public class MainMacro extends StarMacro {
 	}
 
 	private void runSimulation(int maxIterations) {
+
+		log("Meshing...");
+
 		/** 
 		 * Get the needed criterion, modify them and run the simulation 
 		 * The simulation will stop if the number of iterations has reached 

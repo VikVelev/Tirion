@@ -28,6 +28,7 @@ public class PostProcessing extends StarMacro {
 	}
 
 	private void run() throws Exception {
+        log("Post Processing...");
 
 		clipping = 0;
 		sliceStep = 0.05;

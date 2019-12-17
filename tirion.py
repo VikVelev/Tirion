@@ -16,22 +16,23 @@ parser.add_argument('--job_name', metavar="-j", type=str, help='Job name.', requ
 parser.add_argument('--simulation', metavar="-s", type=str, help='Path to the .sim file to run processing on.', required=True)
 parser.add_argument('--nodes', metavar='-n', default=1, type=int, help='Number of nodes to request the resource management system for.', required=True)
 parser.add_argument('--cores', metavar='-c', type=int, help='Number of cores per node.', required=True)
-parser.add_argument('--log', metavar='-l', default="", type=str, help="Path to which to save the logs from SLURM.")
 parser.add_argument('--temp', default=0, type=int, help="Should the generated temp job.sh file be saved")
-parser.add_argumetn('--full', type=str, help="Use the full package simulation, postprocessing, exporting (wip, exporting is not working yet).")
+parser.add_argumetn('--pp', default=0, type=int, help="Just post-process.")
+parser.add_argumetn('--meshing', default=0, type=int, help="Just mesh.")
+parser.add_argumetn('--full', default=0, type=int, help="Use the full package simulation, postprocessing, exporting (wip, exporting is not working yet).")
+parser.add_argument('--log', metavar='-l', default="", type=str, help="Path to which to save the logs from SLURM.")
 
 # WIP
 #(iterations, !symmetry, types, output) TODO: Merge mesh and pp scripts
-parser.add_argument('--cornering', metavar='-cn', type=int, default=0, help='A flag to enable cornering.')
-parser.add_argument('--iterations', metavar="-i", default=3000, type=int, help='Number of iterations to run the simulation for.')
-parser.add_argument('--output', metavar='-o', type=str, help='Ouptut directory')
+parser.add_argument('--cornering', metavar='-cn', type=int, default=0, help='[WIP] A flag to enable cornering on processing.')
+parser.add_argument('--iterations', metavar="-i", default=3000, type=int, help='[WIP] Number of iterations to run the simulation for.')
+parser.add_argument('--output', metavar='-o', type=str, help='[WIP] Ouptut directory')
 parser.add_argument('--symmetry', type=bool, help='[!stub(wip)] A flag to enable symmetry. If cornering is enabled this doesn\'t matter')
-parser.add_argument('--type', metavar='-t', type=str, help='Type of processing: meshing | simulation | post-processing. Default is all.[!stub(wip)]')
+parser.add_argument('--type', metavar='-t', type=str, help='[WIP] Type of processing: meshing | simulation | post-processing. Default is all.[!stub(wip)]')
 args = parser.parse_args()
 
 # file_name = './temp/tirion.job.%s.sh'%(int(time.time()))
 file_name = './temp/tirion.job.%s.sh'%(args.name)
-
 
 @atexit.register
 def cleanup():
@@ -67,16 +68,20 @@ for i, line in enumerate(line_list):
 
     # Parse for macroPath, Simulation directory
     if re.match("macrosPath=", line) is not None:
+        
         macros = "./src/main/MainMacro.java, ./src/main/PostProcessing.java"
         
-        if args.full is not None:
-            macros = "./src/main/FullCore.java"    
+        if args.pp == 1:
+            macros = './src/main/PostProcessing'
+        else if args.meshing == 1:
+            macros = './src/main/MainMacro.java'
+        else if args.full == 1:
+            macros = "./src/main/FullCore.java"
         
         line_list[i] = line.replace("{?}", macros)
     
     if re.match("simPath=", line) is not None:
         line_list[i] = line.replace("{?}", args.simulation)
-        
         
 
 file_to_write = open(file_name, 'w')
