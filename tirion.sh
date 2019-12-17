@@ -85,7 +85,7 @@ function main {
             -licpath $CDLMD_LICENSE_FILE\
             -power $simPath\
             -hardwarebatch\
-            -batch $meshPath,$ppPath
+            -batch $macrosPath
     else
         echo "[-] Running in a SLURM Environment Cluster..." 
         $starccm\
@@ -95,7 +95,7 @@ function main {
              -mpi intel\
              -np $cores\
              -machinefile $nodelist\
-             -batch $meshPath,$ppPath
+             -batch $macrosPath
              $simPath
     fi
 
