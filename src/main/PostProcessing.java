@@ -687,7 +687,7 @@ public class PostProcessing extends StarMacro {
 		// 	);
 		// 	iterVel = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
 
-		// 	namePath = VectVelZFolder + "/VectVelZ_" + iterVel + ".jpg";
+		// 	namePath = VectVelZFolder + "/VectVelZ_" + iterVel + ".png";
 		// 	figName = simName + " " + "z=" + String.format("%.3f", 0.01 * iterZ) + "m";
 
 		// 	otherAnnotation.setText(figName);
@@ -712,7 +712,7 @@ public class PostProcessing extends StarMacro {
 		// 	);
 
 		// 	iterVel = (iterZ >= 10) ? String.valueOf(iterZ) : "0" + String.valueOf(iterZ);
-		// 	namePath = VectVelZFolder + "/VectVelZ_" + iterVel + ".jpg";
+		// 	namePath = VectVelZFolder + "/VectVelZ_" + iterVel + ".png";
 		// 	figName = simName + " " + "z=" + String.format("%.3f", sliceStep * (iterZ - 4)) + "m";
 		// 	otherAnnotation.setText(figName);
 			
