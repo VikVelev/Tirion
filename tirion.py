@@ -18,9 +18,12 @@ parser.add_argument('--nodes', metavar='-n', default=1, type=int, help='Number o
 parser.add_argument('--cores', metavar='-c', type=int, help='Number of cores per node.', required=True)
 parser.add_argument('--log', metavar='-l', default="", type=str, help="Path to which to save the logs from SLURM.")
 parser.add_argument('--temp', default=0, type=int, help="Should the generated temp job.sh file be saved")
-parser.add_argumetn('--full', type=str, help="Use the full package simulation, postprocessing, exporting (wip, exporting is not working yet).")
+parser.add_argument('--full', type=str, help="Use the full package simulation, postprocessing, exporting (wip, exporting is not working yet).")
+parser.add_argument('--interpolate', default=0, type=int, help="Should we interpolate the post-processed animations to 30 fps. [VERY Computationally intensive since it uses only 1 core]")
 
-# WIP
+# [TODO] Write examples and write documentation.
+
+####### WIP
 #(iterations, !symmetry, types, output) TODO: Merge mesh and pp scripts
 parser.add_argument('--cornering', metavar='-cn', type=int, default=0, help='A flag to enable cornering.')
 parser.add_argument('--iterations', metavar="-i", default=3000, type=int, help='Number of iterations to run the simulation for.')
@@ -30,8 +33,7 @@ parser.add_argument('--type', metavar='-t', type=str, help='Type of processing: 
 args = parser.parse_args()
 
 # file_name = './temp/tirion.job.%s.sh'%(int(time.time()))
-file_name = './temp/tirion.job.%s.sh'%(args.name)
-
+file_name = './temp/tirion.job.%s.sh' % (args.name)
 
 @atexit.register
 def cleanup():
@@ -54,7 +56,7 @@ for i, line in enumerate(line_list):
         line_list[i] = line.replace("[BASE]", "[META-MODIFIED]")
     
     if re.match("#SBATCH -J", line) is not None:
-        line_list[i] = line.replace("{?}" ,args.name)
+        line_list[i] = line.replace("{?}", args.name)
         
     if re.match("#SBATCH --nodes", line) is not None:
         line_list[i] = line.replace("{?}", str(args.nodes))
@@ -77,10 +79,11 @@ for i, line in enumerate(line_list):
     if re.match("simPath=", line) is not None:
         line_list[i] = line.replace("{?}", args.simulation)
         
-        
+    if re.match("interpolate=", line) is not None:
+        line_list[i] = line.replace("{?}", args.interpolate)
 
 file_to_write = open(file_name, 'w')
 file_to_write.writelines(line_list)
-file_to_write.close()
+file_to_write.close() # Actually commits changes ensuring atomicity I guess.
 
 subprocess.call("sbatch %s" % (file_name), shell=True)

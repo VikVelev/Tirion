@@ -50,11 +50,12 @@ fi
 # {?} will be replaced with actual values.
 macrosPath={?};
 simPath={?};
+interpolate={?};
 cores="$SLURM_NTASKS";
 starccm="starccm+";
 # starccm="/opt/CD-adapco/STAR-CCM+11.04.012-R8/star/bin/starccm+"
 
-[ $macroPath == {?} ] && echo "Not designed to be run like this." && exit 0
+[ $macrosPath == {?} ] && echo "Not designed to be run like this." && exit 0
 [ $simPath == {?} ] && echo "Not designed to be run like this." && exit 0
 
 function main {
@@ -74,7 +75,7 @@ function main {
     echo "    -- MainMacro Script: $macroPath"
     echo "[%] Running STAR-CCM+ with $cores cores configured..."
 
-    sleep 1
+    sleep 1;
 
     if [ -z $SLURM_NTASKS ]; then 
         $starccm\
@@ -99,25 +100,21 @@ function main {
              $simPath
     fi
 
-    # WIP
-    # convert_to_videos
+    if [ $videos -e 1 ]; then;
+        echo "[%] Starting video conversion..."
+        convert_to_videos && echo "[*] Videos created." || echo "[-] Failed."
+    fi
 }
 
-# WIP
 function convert_to_videos {
-    currentDir=$(pwd);
-    cd $(dirname $simPath);
-    
-    simName=$(basename $simPath);
-    simName=${simName::-4};
 
-    cd "PostProcessing#${simName}";
+    currentDir=$(pwd);
+    cd $(dirname $simPath)"/PostProcessing#${simName}";
 
     for f in *; do
         if [ -d "$f" ]; then
             cd $f;
-            bash ./src/utils/video_output.sh '$f_*';
-            echo $f;
+            bash $currentDir/src/utils/video_output.sh $f'_%02d.png' $f $currentDir $interpolate
             cd ..;
         fi
     done
