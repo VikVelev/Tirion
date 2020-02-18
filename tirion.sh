@@ -132,7 +132,3 @@ function convert_to_videos {
 }
 
 main
-<<<<<<< HEAD
-
-=======
->>>>>>> Finished base implementation of the ffpemg preprocessing, added frame interpolation [VERY ALPHA-BETA] Not tested
