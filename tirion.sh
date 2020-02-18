@@ -111,12 +111,13 @@ function main {
              $simPath
     fi
 
-    if [ $videos -e 1 ]; then;
+    if [ $videos -eq 1 ]; then;
         echo "[%] Starting video conversion..."
         convert_to_videos && echo "[*] Videos created." || echo "[-] Failed."
     fi
 }
 
+## [Note] this works on it's own. TODO: Try Manual Integration Testing.
 function convert_to_videos {
 
     currentDir=$(pwd);
